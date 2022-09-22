@@ -1,5 +1,5 @@
 body {
-    background-color: gainsboro;
+    background-color: rgb(80, 80, 80);
 }
 
 .interactive-container {
@@ -26,7 +26,7 @@ body {
     background-color: #2A0944;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
-    border-color: #48352c;
+    border-color: #473329;
     border-width: 25px;
     border-radius: 50px;
 }
@@ -38,7 +38,7 @@ body {
     background-color: #754d94;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
-    border-color: #eaceff;
+    border-color: #c294e6;
     border-width: 10px;
     border-radius: 50px;
 }
@@ -130,23 +130,79 @@ body {
     text-align: center;
     font-family: 'Arvo', serif;
     font-size: 18pt;
-    color: #ffffff;
+    color: #FAF5E4;
 }
 
 #six-card-wager-circle {
-    left: 430px;
+    left: 480px;
     border-color: #3FA796;
 }
 
 #six-card-label {
-    left: 462px;
+    left: 511px;
 }
 
 #pair-plus-wager-circle {
-    left: 1012px;
+    left: 962px;
     border-color: #FF6363;
 }
 
 #pair-plus-label {
-    left: 1057px;
+    left: 1007px;
+}
+
+.btn {
+    top: 735px;
+    background: #1b8676;
+    background-image: linear-gradient(to bottom, #1b8676, #125B50);
+    border-radius: 28px;
+    font-family: 'Merriweather', serif;
+    color: #FAF5E4;
+    font-size: 16pt;
+    padding: 10px 20px 10px 20px;
+    border: solid #0d3a34 4px;
+}
+
+.btn:hover {
+    background: #37c4af;
+    background-image: linear-gradient(to bottom, #37c4af, #1f907f);
+    border: solid #09695b 4px;
+}
+
+#deal-button {
+    left: 916px;
+    padding: 10px 30px 10px 30px;
+    background: #ce4170;
+    background-image: linear-gradient(to bottom, #ce4170, #A10035);
+    border: solid #6f0025 4px;
+}
+
+#deal-button:hover {
+    background: #d3849e;
+    background-image: linear-gradient(to bottom, #d3849e, #d30046);
+    border: solid #882144 4px;
+}
+
+#play-button {
+    left: 1037px;
+    padding: 10px 30px 10px 30px;
+}
+
+#fold-button {
+    left: 1155px;
+    padding: 10px 30px 10px 30px;
+}
+
+#rebet-button {
+    left: 1275px;
+    color: #150f1b;
+    background: #ffcc40;
+    background-image: linear-gradient(to bottom, #ffd76a, #F8B400);
+    border: solid #b58500 4px;
+}
+
+#rebet-button:hover {
+    background: #ffe395;
+    background-image: linear-gradient(to bottom, #ffe395, #fbcc4c);
+    border: solid #ba983b 4px;
 }
