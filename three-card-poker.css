@@ -1,0 +1,26 @@
+#interactive-container {
+    height: 1200px;
+    width: 1600px;
+    position: relative;
+    border: 1px solid black;
+}
+
+#interactive-container>* {
+    position: absolute;
+    transform: translateY(-50%) translateX(100%);
+    border: 1px solid black;
+}
+
+#test-div {
+    top: 65%;
+    right: 1075px;
+    width: 550px;
+    height: 60px;
+}
+
+#test-div-2 {
+    top: 45%;
+    right: 1075px;
+    width: 550px;
+    height: 60px;
+}
