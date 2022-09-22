@@ -68,3 +68,84 @@ body {
     left: 610px;
     font-size: 36pt;
 }
+  
+.wager-diamond {
+    left: 737px;
+    transform: rotate(45deg);
+}
+
+.wager-diamond-label {
+    left: 764px;
+    width: 70px;
+    height: 30px;
+    vertical-align: middle;
+    line-height: 30px;
+    text-align: center;
+    color: #fff280;
+    font-family: 'Arvo', serif;
+    font-size: 18pt;
+}
+
+#ante-diamond-label {
+    top: 683px;
+}
+
+#play-diamond {
+    top: 510px;
+    width: 125px;
+    height: 125px;
+    background: #fff280;
+}
+
+#play-diamond-label {
+    top: 558px;
+    color: #086100;
+}
+
+#ante-diamond {
+    top: 635px;
+    width: 95px;
+    height: 95px;
+    background-color: #086100;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-style: solid;
+    border-color: #fff280;
+    border-width: 15px;
+}
+
+.wager-circle {
+    top: 475px;
+    width: 125px;
+    height: 125px;
+    background: #086100;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-style: solid;
+    border-width: 15px;
+    border-radius: 50%;
+}
+
+.wager-circle-label {
+    top: 523px;
+    text-align: center;
+    font-family: 'Arvo', serif;
+    font-size: 18pt;
+    color: #ffffff;
+}
+
+#six-card-wager-circle {
+    left: 430px;
+    border-color: #00bfff;
+}
+
+#six-card-label {
+    left: 462px;
+}
+
+#pair-plus-wager-circle {
+    left: 1012px;
+    border-color: #e263ff;
+}
+
+#pair-plus-label {
+    left: 1057px;
+}
