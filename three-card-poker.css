@@ -23,10 +23,10 @@ body {
     left: 175px;
     width: 1200px;
     height: 800px;
-    background-color: #086100;
+    background-color: #2A0944;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
-    border-color: sienna;
+    border-color: #48352c;
     border-width: 25px;
     border-radius: 50px;
 }
@@ -35,10 +35,10 @@ body {
     left: 540px;
     width: 500px;
     height: 125px;
-    background-color: #9fcdaa;
+    background-color: #754d94;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
-    border-color: #dedede;
+    border-color: #eaceff;
     border-width: 10px;
     border-radius: 50px;
 }
@@ -52,7 +52,7 @@ body {
 }
 
 .runner-text {
-    color: #086100;
+    color: #2A0944;
     opacity: 12.5%;
     font-family: 'Arvo', serif;
 }
@@ -81,35 +81,36 @@ body {
     vertical-align: middle;
     line-height: 30px;
     text-align: center;
-    color: #fff280;
     font-family: 'Arvo', serif;
     font-size: 18pt;
 }
 
 #ante-diamond-label {
     top: 683px;
+    color: #FEC260;
 }
 
 #play-diamond {
     top: 510px;
     width: 125px;
     height: 125px;
-    background: #fff280;
+    background: #FEC260;
 }
 
 #play-diamond-label {
     top: 558px;
-    color: #086100;
+    font-weight: 700;
+    color: #2A0944;
 }
 
 #ante-diamond {
     top: 635px;
     width: 95px;
     height: 95px;
-    background-color: #086100;
+    background-color: #2A0944;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
-    border-color: #fff280;
+    border-color: #FEC260;
     border-width: 15px;
 }
 
@@ -117,7 +118,7 @@ body {
     top: 475px;
     width: 125px;
     height: 125px;
-    background: #086100;
+    background: #2A0944;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-style: solid;
     border-width: 15px;
@@ -134,7 +135,7 @@ body {
 
 #six-card-wager-circle {
     left: 430px;
-    border-color: #00bfff;
+    border-color: #3FA796;
 }
 
 #six-card-label {
@@ -143,7 +144,7 @@ body {
 
 #pair-plus-wager-circle {
     left: 1012px;
-    border-color: #e263ff;
+    border-color: #FF6363;
 }
 
 #pair-plus-label {

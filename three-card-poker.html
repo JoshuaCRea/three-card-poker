@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Three-Card-Poker</title>
-        <link rel="stylesheet" href="three-card-poker.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-        href="https://fonts.googleapis.com/css2?family=Acme&family=Arvo&family=Barlow:wght@400;700&family=Merriweather:wght@300;400;700;900&display=swap"
-        rel="stylesheet"
-        />
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>Three-Card-Poker</title>
+    <link rel="stylesheet" href="three-card-poker.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Acme&family=Arvo&family=Barlow:wght@400;700&family=Merriweather:wght@300;400;700;900&display=swap"
+    rel="stylesheet"
+    />
+</head>
 
-    <body>
-        <div class="interactive-container">
-            <div id="table"></div>
-            <div class="hand-runner" id="dealer-hand-runner"></div>
-                <div class="runner-text" id="dealer-runner-text">DEALER CARDS</div>
-            <div class="hand-runner" id="player-hand-runner"></div>
-                <div class="runner-text" id="player-runner-text">YOUR CARDS</div>
-            <br />
-            <div class="wager-diamond" id="play-diamond"></div>
-            <div class="wager-diamond-label" id="play-diamond-label">PLAY</div>
-            <div class="wager-diamond" id="ante-diamond"></div>
-            <div class="wager-diamond-label" id="ante-diamond-label">ANTE</div>
-            <div class="wager-circle" id="pair-plus-wager-circle"></div>
-            <div class="wager-circle-label" id="pair-plus-label">PAIR<br>PLUS</div>
-            <div class="wager-circle" id="six-card-wager-circle"></div>
-            <div class="wager-circle-label" id="six-card-label">6 CARD<br>BONUS</div>
-
+<body>
+    <div class="interactive-container">
+        <div id="table"></div>
+        <div id="dealer-hand-runner" class="hand-runner"></div>
+        <div id="dealer-runner-text" class="runner-text">DEALER CARDS</div>
+        <div id="player-hand-runner" class="hand-runner"></div>
+        <div id="player-runner-text" class="runner-text">YOUR CARDS</div>
+        <div id="play-diamond" class="wager-diamond"></div>
+        <div id="play-diamond-label" class="wager-diamond-label">PLAY</div>
+        <div id="ante-diamond" class="wager-diamond"></div>
+        <div id="ante-diamond-label" class="wager-diamond-label">ANTE</div>
+        <div id="pair-plus-wager-circle" class="wager-circle"></div>
+        <div id="pair-plus-label" class="wager-circle-label">PAIR<br>PLUS</div>
+        <div id="six-card-wager-circle" class="wager-circle"></div>
+        <div id="six-card-label" class="wager-circle-label">6 CARD<br>BONUS</div>
         </div>
-    </body>
+</body>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="module" src="three-card-poker.js"></script>
