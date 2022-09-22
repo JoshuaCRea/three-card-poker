@@ -15,7 +15,7 @@ body {
     border: 1px solid; 
     border-color: black;
     border-style: solid;
-    /* border-color: transparent; */
+    border-color: transparent;
 }
 
 #table {
@@ -49,4 +49,22 @@ body {
 
 #player-hand-runner {
     top: 300px;
+}
+
+.runner-text {
+    color: #086100;
+    opacity: 12.5%;
+    font-family: 'Arvo', serif;
+}
+
+#player-runner-text {
+    top: 340px;
+    left: 611px;
+    font-size: 42pt;
+}
+
+#dealer-runner-text {
+    top: 93px;
+    left: 610px;
+    font-size: 36pt;
 }
