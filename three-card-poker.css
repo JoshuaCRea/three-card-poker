@@ -1,26 +1,52 @@
-#interactive-container {
+body {
+    background-color: gainsboro;
+}
+
+.interactive-container {
     height: 1200px;
     width: 1600px;
     position: relative;
-    border: 1px solid black;
+    border: 1px solid;
+    border-color: black;
 }
 
-#interactive-container>* {
+.interactive-container>* {
     position: absolute;
-    transform: translateY(-50%) translateX(100%);
-    border: 1px solid black;
+    border: 1px solid; 
+    border-color: black;
+    border-style: solid;
+    /* border-color: transparent; */
 }
 
-#test-div {
-    top: 65%;
-    right: 1075px;
-    width: 550px;
-    height: 60px;
+#table {
+    top: 0px;
+    left: 175px;
+    width: 1200px;
+    height: 800px;
+    background-color: #086100;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-style: solid;
+    border-color: sienna;
+    border-width: 25px;
+    border-radius: 50px;
 }
 
-#test-div-2 {
-    top: 45%;
-    right: 1075px;
-    width: 550px;
-    height: 60px;
+.hand-runner {
+    left: 540px;
+    width: 500px;
+    height: 125px;
+    background-color: #9fcdaa;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-style: solid;
+    border-color: #dedede;
+    border-width: 10px;
+    border-radius: 50px;
+}
+
+#dealer-hand-runner {
+    top: 50px;
+}
+
+#player-hand-runner {
+    top: 300px;
 }
