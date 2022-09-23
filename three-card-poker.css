@@ -85,8 +85,9 @@ body {
 }
 
 #ante-diamond-label {
-    top: 683px;
+    top: 700px;
     color: #FEC260;
+    transform: rotate(315deg) translate(-15px, 33px);
 }
 
 #play-diamond {
@@ -97,9 +98,10 @@ body {
 }
 
 #play-diamond-label {
-    top: 558px;
+    top: 575px;
     font-weight: 700;
     color: #2A0944;
+    transform: rotate(315deg) translate(-15px, 55px);
 }
 
 #ante-diamond {
@@ -113,6 +115,12 @@ body {
     border-width: 15px;
 }
 
+#ante-diamond:hover {
+    background-color: #00a2b7;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-color: #ffea00;
+}
+
 .wager-circle {
     top: 475px;
     width: 125px;
@@ -124,12 +132,19 @@ body {
     border-radius: 50%;
 }
 
+#six-card-wager-circle:hover {
+    background-color: #00a2b7;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-color: #ffea00;
+}
+
 .wager-circle-label {
     top: 523px;
     text-align: center;
     font-family: 'Arvo', serif;
     font-size: 18pt;
     color: #FAF5E4;
+    transform: translate(0px, 33px);
 }
 
 #six-card-wager-circle {
@@ -144,6 +159,12 @@ body {
 #pair-plus-wager-circle {
     left: 962px;
     border-color: #FF6363;
+}
+
+#pair-plus-wager-circle:hover {
+    background-color: #00a2b7;
+    background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
+    border-color: #ffea00;
 }
 
 #pair-plus-label {
@@ -293,34 +314,37 @@ body {
 
 #title {
     width: 250px;
-    top: 40px;
-    left: 1140px;
+    top: 44px;
+    left: 1104px;
 }
 
 .chip-stack img {
-    visibility: hidden;
     width: 50px;
 }
 
 #ante-bet-chipstack {
+    visibility: hidden;
     top: 720px;
     left: 725px;
     z-index: 3;
 }
 
 #play-bet-chipstack {
+    visibility: hidden;
     top: 585px;
     left: 725px;
     z-index: 3;
 }
 
 #sixcb-bet-chipstack {
+    visibility: hidden;
     top: 585px;
     left: 500px;
     z-index: 3;
 }
 
 #pp-bet-chipstack {
+    visibility: hidden;
     top: 585px;
     left: 975px;
     z-index: 3;
@@ -335,28 +359,28 @@ body {
 
 #ante-chiptally {
     top: 730px;
-    left: 765px;
+    left: 780px;
     text-shadow: 2px 2px #000000;
     z-index: 3;
 }
 
 #play-chiptally {
     top: 590px;
-    left: 765px;
+    left: 780px;
     text-shadow: 2px 2px #000000;
     z-index: 3;
 }
 
 #sixcb-chiptally {
     top: 595px;
-    left: 540px;
+    left: 555px;
     text-shadow: 2px 2px #000000;
     z-index: 3;
 }
 
 #pp-chiptally {
     top: 595px;
-    left: 1015px;
+    left: 1030px;
     text-shadow: 2px 2px #000000;
     z-index: 3;
 }
