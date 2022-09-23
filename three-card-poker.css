@@ -290,3 +290,73 @@ body {
 #ante-bonus-table tbody tr:last-of-type {
     border-bottom: 5px solid #FEC260;
 }
+
+#title {
+    width: 250px;
+    top: 40px;
+    left: 1140px;
+}
+
+.chip-stack img {
+    visibility: hidden;
+    width: 50px;
+}
+
+#ante-bet-chipstack {
+    top: 720px;
+    left: 725px;
+    z-index: 3;
+}
+
+#play-bet-chipstack {
+    top: 585px;
+    left: 725px;
+    z-index: 3;
+}
+
+#sixcb-bet-chipstack {
+    top: 585px;
+    left: 500px;
+    z-index: 3;
+}
+
+#pp-bet-chipstack {
+    top: 585px;
+    left: 975px;
+    z-index: 3;
+}
+
+.chip-tally {
+    visibility: hidden;
+    font-size: 20pt;
+    font-family: "Arvo", serif;
+    color: #FAF5E4;
+}
+
+#ante-chiptally {
+    top: 730px;
+    left: 765px;
+    text-shadow: 2px 2px #000000;
+    z-index: 3;
+}
+
+#play-chiptally {
+    top: 590px;
+    left: 765px;
+    text-shadow: 2px 2px #000000;
+    z-index: 3;
+}
+
+#sixcb-chiptally {
+    top: 595px;
+    left: 540px;
+    text-shadow: 2px 2px #000000;
+    z-index: 3;
+}
+
+#pp-chiptally {
+    top: 595px;
+    left: 1015px;
+    text-shadow: 2px 2px #000000;
+    z-index: 3;
+}
