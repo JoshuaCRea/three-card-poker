@@ -1,13 +1,23 @@
 const initialPlayerBalance = 1000;
 const testWagerAmount = 1;
 let playerBalance = initialPlayerBalance;
+let totalWagerAmount = 0;
 let anteWager = 0;
 let playWager = 0;
 let pairPlusWager = 0;
 let sixCardBonusWager = 0;
 
+function _getSelectedWagerAmount() {
+    const radioButtons = document.getElementsByName("wager-amount");
+    const wagerValue = parseInt(Array.from(radioButtons).find((x) => x.checked).value, 10);
+    return wagerValue;
+}
+
 function placeWager(wagerAmount, wagerType) {
     playerBalance -= wagerAmount;
+    totalWagerAmount += wagerAmount;
+    $("#player-balance-display").html(`$${playerBalance}`);
+    $("#total-wager-display").html(`$${totalWagerAmount}`);
     if (wagerType === "ANTE") {
         anteWager += wagerAmount;
         $("#ante-bet-chipstack").css("visibility", "visible");
@@ -34,26 +44,16 @@ function placeWager(wagerAmount, wagerType) {
     }
 }
 
-function _defineClickBehaviorOfAnteDiamond() {
-    $("#ante-diamond").click(function () {
-        placeWager(testWagerAmount, "ANTE");
-    });
-};
-
-function _defineClickBehaviorOfPairPlusCircle() {
-    $("#pair-plus-wager-circle").click(function () {
-        placeWager(testWagerAmount, "PAIR_PLUS");
-    });
-};
-
-function _defineClickBehaviorOfSixCardBonusCircle() {
-    $("#six-card-wager-circle").click(function () {
-        placeWager(testWagerAmount, "SIX_CARD_BONUS");
-    });
-};
-
 window.onload = () => {
-    _defineClickBehaviorOfAnteDiamond();
-    _defineClickBehaviorOfPairPlusCircle();
-    _defineClickBehaviorOfSixCardBonusCircle();
+    $("#ante-diamond").click(function () {
+        placeWager(_getSelectedWagerAmount(), "ANTE");
+    });
+    $("#pair-plus-wager-circle").click(function () {
+        placeWager(_getSelectedWagerAmount(), "PAIR_PLUS");
+    });
+    $("#six-card-wager-circle").click(function () {
+        placeWager(_getSelectedWagerAmount(), "SIX_CARD_BONUS");
+    });
+    $("#player-balance-display").html(`$${playerBalance}`);
+    $("#total-wager-display").html(`$${totalWagerAmount}`);
 }
