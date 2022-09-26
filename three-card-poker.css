@@ -326,28 +326,24 @@ body {
     visibility: hidden;
     top: 720px;
     left: 745px;
-    z-index: 3;
 }
 
 #play-bet-chipstack {
     visibility: hidden;
     top: 585px;
     left: 725px;
-    z-index: 3;
 }
 
 #sixcb-bet-chipstack {
     visibility: hidden;
     top: 585px;
     left: 500px;
-    z-index: 3;
 }
 
 #pp-bet-chipstack {
     visibility: hidden;
     top: 585px;
     left: 975px;
-    z-index: 3;
 }
 
 .chip-tally {
@@ -361,28 +357,25 @@ body {
     top: 730px;
     left: 800px;
     text-shadow: 2px 2px #000000;
-    z-index: 3;
 }
 
 #play-chiptally {
     top: 590px;
     left: 780px;
     text-shadow: 2px 2px #000000;
-    z-index: 3;
 }
 
 #sixcb-chiptally {
     top: 595px;
     left: 555px;
     text-shadow: 2px 2px #000000;
-    z-index: 3;
+
 }
 
 #pp-chiptally {
     top: 595px;
     left: 1030px;
     text-shadow: 2px 2px #000000;
-    z-index: 3;
 }
 
 #wager-slider-title {
@@ -460,7 +453,6 @@ body {
     transition: all 0.15s ease-in-out;
     transform: translate(-50%, -50%);
     border: 2px solid #fff;
-    z-index: 2;
 }
 
 .ui-tally {
@@ -481,7 +473,7 @@ body {
 }
 
 #total-wager-display {
-    color: #a2ffa2;
+    color: #3FA796;
     font-family: "Arvo", serif;
     font-size: 24pt;
 }
@@ -490,4 +482,17 @@ body {
     color: #a2ffa2;
     font-family: "Arvo", serif;
     font-size: 24pt;
+}
+
+#player-card-display {
+    top: 285px;
+    left: 606px;
+    height: 125px;
+    width: 500px;
+    position: absolute;
+}
+
+.card {
+    width: 120px;
+    margin: 5px;
 }
