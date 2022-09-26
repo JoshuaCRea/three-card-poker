@@ -20,30 +20,32 @@ function placeWager(wagerAmount, wagerType) {
     totalWagerAmount += wagerAmount;
     $("#player-balance-display").html(`$${playerBalance}`);
     $("#total-wager-display").html(`$${totalWagerAmount}`);
-    if (wagerType === "ANTE") {
-        anteWager += wagerAmount;
-        $("#ante-bet-chipstack").css("visibility", "visible");
-        $("#ante-chiptally").html(`$${anteWager}`);
-        $("#ante-chiptally").css("visibility", "visible");
-    }
-    if (wagerType === "PLAY") {
-        playWager += wagerAmount;
-        $("#play-bet-chipstack").css("visibility", "visible");
-        $("#play-chiptally").html(`$${playWager}`);
-        $("#play-chiptally").css("visibility", "visible");
-    }
-    if (wagerType === "PAIR_PLUS") {
-        pairPlusWager += wagerAmount;
-        $("#pp-bet-chipstack").css("visibility", "visible");
-        $("#pp-chiptally").html(`$${pairPlusWager}`);
-        $("#pp-chiptally").css("visibility", "visible");
-    }
-    if (wagerType === "SIX_CARD_BONUS") {
-        sixCardBonusWager += wagerAmount;
-        $("#sixcb-bet-chipstack").css("visibility", "visible");
-        $("#sixcb-chiptally").html(`$${sixCardBonusWager}`);
-        $("#sixcb-chiptally").css("visibility", "visible");
-    }
+    const WAGER_TYPES = {
+        ANTE: {
+            incrementWager: () => anteWager += wagerAmount,
+            elementIdPrefix: "ante",
+            getWagerCounter: () => anteWager,
+        },
+        PLAY: {
+            incrementWager: () => playWager += wagerAmount,
+            elementIdPrefix: "play",
+            getWagerCounter: () => playWager,
+        },
+        PAIR_PLUS: {
+            incrementWager: () => pairPlusWager += wagerAmount,
+            elementIdPrefix: "pp",
+            getWagerCounter: () => pairPlusWager,
+        },
+        SIX_CARD_BONUS: {
+            incrementWager: () => sixCardBonusWager += wagerAmount,
+            elementIdPrefix: "sixcb",
+            getWagerCounter: () => sixCardBonusWager,
+        },
+    };
+    WAGER_TYPES[wagerType].incrementWager();
+    $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-bet-chipstack`).css("visibility", "visible");
+    $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).css("visibility", "visible");
+    $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).html(`$${WAGER_TYPES[wagerType].getWagerCounter()}`);
 }
 
 function dealToPlayer() {
@@ -78,23 +80,18 @@ function getShuffledDeck() {
 }
 
 window.onload = () => {
-    $("#ante-diamond").click(function () {
-        if (isRoundActive) {
-            return;
-        }
-        placeWager(_getSelectedWagerAmount(), "ANTE");
-    });
-    $("#pair-plus-wager-circle").click(function () {
-        if (isRoundActive) {
-            return;
-        }
-        placeWager(_getSelectedWagerAmount(), "PAIR_PLUS");
-    });
-    $("#six-card-wager-circle").click(function () {
-        if (isRoundActive) {
-            return;
-        }
-        placeWager(_getSelectedWagerAmount(), "SIX_CARD_BONUS");
+    const CLICK_BEHAVIORS = {
+        "#ante-diamond": "ANTE",
+        "#pair-plus-wager-circle": "PAIR_PLUS",
+        "#six-card-wager-circle": "SIX_CARD_BONUS",
+    };
+    Object.keys(CLICK_BEHAVIORS).forEach(elementId => {
+        $(elementId).click(function () {
+            if (isRoundActive) {
+                return;
+            }
+            placeWager(_getSelectedWagerAmount(), CLICK_BEHAVIORS[elementId]);
+        });
     });
     $("#player-balance-display").html(`$${playerBalance}`);
     $("#total-wager-display").html(`$${totalWagerAmount}`);
