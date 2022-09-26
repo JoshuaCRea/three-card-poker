@@ -49,7 +49,7 @@ function placeWager(wagerAmount, wagerType) {
 }
 
 function dealToPlayer() {
-    if (anteWager === 0 || isRoundActive || playWager !== 0) {
+    if (anteWager === 0 || isRoundActive) {
         return;
     }
     isRoundActive = true;
@@ -58,30 +58,34 @@ function dealToPlayer() {
     displayHand(playerHand, "player");
 }
 
+function reset() {
+    isRoundActive = false;
+    anteWager = 0;
+    pairPlusWager = 0;
+    sixCardBonusWager = 0;
+}
+
 function playGame() {
     if (!isRoundActive) {
         return;
     }
     placeWager(anteWager, "PLAY");
     $("#player-balance").html(`$${playerBalance}`);
-    isRoundActive = false;
     const dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
+    reset();
 }
 
 function fold() {
-    if (!isRoundActive || playWager !== 0) {
+    if (!isRoundActive) {
         return;
     }
-    isRoundActive = false;
     const dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
-    anteWager === 0;
-    pairPlusWager === 0;
-    sixCardBonusWager === 0;
     $("#anteWager").html(anteWager);
     $("#pairPlusWager").html(pairPlusWager);
     $("#sixCardBonusWager").html(sixCardBonusWager);
+    reset();
 }
 
 function displayHand(hand, person) {
