@@ -351,6 +351,7 @@ body {
     font-size: 20pt;
     font-family: "Arvo", serif;
     color: #FAF5E4;
+    z-index: 1;
 }
 
 #ante-chiptally {
@@ -486,6 +487,14 @@ body {
 
 #player-card-display {
     top: 285px;
+    left: 606px;
+    height: 125px;
+    width: 500px;
+    position: absolute;
+}
+
+#dealer-card-display {
+    top: 32px;
     left: 606px;
     height: 125px;
     width: 500px;

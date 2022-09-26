@@ -49,13 +49,39 @@ function placeWager(wagerAmount, wagerType) {
 }
 
 function dealToPlayer() {
-    if (anteWager === 0 || isRoundActive) {
+    if (anteWager === 0 || isRoundActive || playWager !== 0) {
         return;
     }
     isRoundActive = true;
     deck = getShuffledDeck();
     const playerHand = deck.slice(0, 3);
     displayHand(playerHand, "player");
+}
+
+function playGame() {
+    if (!isRoundActive) {
+        return;
+    }
+    placeWager(anteWager, "PLAY");
+    $("#player-balance").html(`$${playerBalance}`);
+    isRoundActive = false;
+    const dealerHand = deck.slice(3, 6);
+    displayHand(dealerHand, "dealer");
+}
+
+function fold() {
+    if (!isRoundActive || playWager !== 0) {
+        return;
+    }
+    isRoundActive = false;
+    const dealerHand = deck.slice(3, 6);
+    displayHand(dealerHand, "dealer");
+    anteWager === 0;
+    pairPlusWager === 0;
+    sixCardBonusWager === 0;
+    $("#anteWager").html(anteWager);
+    $("#pairPlusWager").html(pairPlusWager);
+    $("#sixCardBonusWager").html(sixCardBonusWager);
 }
 
 function displayHand(hand, person) {
@@ -96,4 +122,6 @@ window.onload = () => {
     $("#player-balance-display").html(`$${playerBalance}`);
     $("#total-wager-display").html(`$${totalWagerAmount}`);
     $("#deal-button").click(() => dealToPlayer());
+    $("#play-button").click(() => playGame());
+    $("#fold-button").click(() => fold());
 }
