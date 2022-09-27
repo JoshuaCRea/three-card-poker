@@ -2,12 +2,15 @@ const initialPlayerBalance = 1000;
 const testWagerAmount = 1;
 let playerBalance = initialPlayerBalance;
 let totalWagerAmount = 0;
-let anteWager = 0;
-let playWager = 0;
-let pairPlusWager = 0;
-let sixCardBonusWager = 0;
 let isRoundActive = false;
 let deck = [];
+
+const WAGER_COUNTERS = {
+    anteWager: 0,
+    playWager: 0,
+    pairPlusWager: 0,
+    sixCardBonusWager: 0,
+}
 
 function _getSelectedWagerAmount() {
     const radioButtons = document.getElementsByName("wager-amount");
@@ -22,34 +25,30 @@ function placeWager(wagerAmount, wagerType) {
     $("#total-wager-display").html(`$${totalWagerAmount}`);
     const WAGER_TYPES = {
         ANTE: {
-            incrementWager: () => anteWager += wagerAmount,
             elementIdPrefix: "ante",
-            getWagerCounter: () => anteWager,
+            wagerCounter: "anteWager",
         },
         PLAY: {
-            incrementWager: () => playWager += wagerAmount,
             elementIdPrefix: "play",
-            getWagerCounter: () => playWager,
+            wagerCounter: "playWager",
         },
         PAIR_PLUS: {
-            incrementWager: () => pairPlusWager += wagerAmount,
             elementIdPrefix: "pp",
-            getWagerCounter: () => pairPlusWager,
+            wagerCounter: "pairPlusWager",
         },
         SIX_CARD_BONUS: {
-            incrementWager: () => sixCardBonusWager += wagerAmount,
             elementIdPrefix: "sixcb",
-            getWagerCounter: () => sixCardBonusWager,
+            wagerCounter: "sixCardBonusWager",
         },
     };
-    WAGER_TYPES[wagerType].incrementWager();
+    WAGER_COUNTERS[WAGER_TYPES[wagerType].wagerCounter] += wagerAmount;
     $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-bet-chipstack`).css("visibility", "visible");
     $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).css("visibility", "visible");
-    $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).html(`$${WAGER_TYPES[wagerType].getWagerCounter()}`);
+    $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).html(`$${WAGER_COUNTERS[WAGER_TYPES[wagerType].wagerCounter]}`);
 }
 
 function dealToPlayer() {
-    if (anteWager === 0 || isRoundActive) {
+    if (WAGER_COUNTERS.anteWager === 0 || isRoundActive) {
         return;
     }
     isRoundActive = true;
@@ -60,16 +59,16 @@ function dealToPlayer() {
 
 function reset() {
     isRoundActive = false;
-    anteWager = 0;
-    pairPlusWager = 0;
-    sixCardBonusWager = 0;
+    WAGER_COUNTERS.anteWager = 0;
+    WAGER_COUNTERS.pairPlusWager = 0;
+    WAGER_COUNTERS.sixCardBonusWager = 0;
 }
 
 function playGame() {
     if (!isRoundActive) {
         return;
     }
-    placeWager(anteWager, "PLAY");
+    placeWager(WAGER_COUNTERS.anteWager, "PLAY");
     $("#player-balance").html(`$${playerBalance}`);
     const dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
@@ -82,9 +81,9 @@ function fold() {
     }
     const dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
-    $("#anteWager").html(anteWager);
-    $("#pairPlusWager").html(pairPlusWager);
-    $("#sixCardBonusWager").html(sixCardBonusWager);
+    $("#anteWager").html(WAGER_COUNTERS.anteWager);
+    $("#pairPlusWager").html(WAGER_COUNTERS.pairPlusWager);
+    $("#sixCardBonusWager").html(WAGER_COUNTERS.sixCardBonusWager);
     reset();
 }
 
