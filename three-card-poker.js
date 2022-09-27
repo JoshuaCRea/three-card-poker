@@ -7,6 +7,12 @@ let totalWagerAmount = 0;
 let isRoundActive = false;
 let deck = [];
 
+class Counter {
+    constructor(array) {
+        array.forEach(val => this[val] = (this[val] || 0) + 1);
+    }
+}
+
 const CARD_RANKS = {
     "2": 0,
     "3": 1,
@@ -82,9 +88,9 @@ function reset() {
     WAGER_COUNTERS.sixCardBonusWager = 0;
 }
 
-function didPlayerWinHighCardTieBreaker() {
-    const playerCardRanks = playerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
-    const dealerCardRanks = dealerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
+function didPlayerWinHighCardTieBreaker(pHand, dHand) {
+    const playerCardRanks = pHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
+    const dealerCardRanks = dHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
     for (let i = 0; i < playerCardRanks.length; i++) {
         if (playerCardRanks[i] > dealerCardRanks[i]) {
             return true;
@@ -96,6 +102,27 @@ function didPlayerWinHighCardTieBreaker() {
     return false;
 }
 
+function isTheHandAPair(hand) {
+    return new Set(hand.map(card => card.charAt(0))).size === 2;
+}
+
+function didPlayerHaveBetterHand(pHand, dHand) {
+    if (isTheHandAPair(pHand) && !isTheHandAPair(dHand)) {
+        return true;
+    } else if (!isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
+        return false;
+    } else if (isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
+        const playerPair = CARD_RANKS[Object.entries(new Counter(pHand.map(card => card.charAt(0)))).filter(rank => rank[1] === 2).toString(10)[0]];
+        const dealerPair = CARD_RANKS[Object.entries(new Counter(dHand.map(card => card.charAt(0)))).filter(rank => rank[1] === 2).toString(10)[0]];
+        if (playerPair - dealerPair > 0) {
+            return true;
+        }
+        return didPlayerWinHighCardTieBreaker(pHand, dHand);
+    } else {
+        return didPlayerWinHighCardTieBreaker(pHand, dHand);
+    }
+}
+
 function playGame() {
     if (!isRoundActive) {
         return;
@@ -104,7 +131,7 @@ function playGame() {
     $("#player-balance").html(`$${playerBalance}`);
     dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
-    const didPlayerWin = didPlayerWinHighCardTieBreaker();
+    const didPlayerWin = didPlayerHaveBetterHand(playerHand, dealerHand);
     const winnerMessage = didPlayerWin ? "Player wins!" : "Dealer wins.";
     $("#infoBox").html(winnerMessage);
     reset();
@@ -164,3 +191,16 @@ window.onload = () => {
     $("#play-button").click(() => playGame());
     $("#fold-button").click(() => fold());
 }
+
+
+// TESTS
+
+// console.log(didPlayerHaveBetterHand(["3C", "7H", "9S"], ["4C", "TH", "2S"]) === false); //dealer has highest card
+// console.log(didPlayerHaveBetterHand(["3C", "QH", "9S"], ["4C", "TH", "2S"]) === true); //player has highest card
+// console.log(didPlayerHaveBetterHand(["TC", "4H", "2D"], ["4C", "TH", "2S"]) === false); //both have equal cards
+// console.log(didPlayerHaveBetterHand(["3C", "7H", "9S"], ["4C", "8H", "8S"]) === false); // dealer has pair, player has highest card
+// console.log(didPlayerHaveBetterHand(["3C", "3H", "9S"], ["4C", "TH", "2S"]) === true); // player has pair, dealer has highest card
+// console.log(didPlayerHaveBetterHand(["2C", "4H", "4D"], ["4C", "4S", "7S"]) === false); // both have equal pairs, dealer has high card outside of pair
+// console.log(didPlayerHaveBetterHand(["7C", "4H", "4D"], ["4C", "4S", "2S"]) === true); // both have equal pairs, player has high card outside of pair
+// console.log(didPlayerHaveBetterHand(["TC", "4H", "4D"], ["4C", "4S", "TS"]) === false);// both have equal pairs, equal high cards
+// console.log(didPlayerHaveBetterHand(["7C", "3H", "3D"], ["8C", "2D", "2S"]) === true);// both have equal pairs, player's pair is higher
