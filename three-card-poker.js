@@ -1,9 +1,27 @@
 const initialPlayerBalance = 1000;
 const testWagerAmount = 1;
+let playerHand = [];
+let dealerHand = [];
 let playerBalance = initialPlayerBalance;
 let totalWagerAmount = 0;
 let isRoundActive = false;
 let deck = [];
+
+const CARD_RANKS = {
+    "2": 0,
+    "3": 1,
+    "4": 2,
+    "5": 3,
+    "6": 4,
+    "7": 5,
+    "8": 6,
+    "9": 7,
+    "T": 8,
+    "J": 9,
+    "Q": 10,
+    "K": 11,
+    "A": 12,
+}
 
 const WAGER_COUNTERS = {
     anteWager: 0,
@@ -53,7 +71,7 @@ function dealToPlayer() {
     }
     isRoundActive = true;
     deck = getShuffledDeck();
-    const playerHand = deck.slice(0, 3);
+    playerHand = deck.slice(0, 3);
     displayHand(playerHand, "player");
 }
 
@@ -64,14 +82,32 @@ function reset() {
     WAGER_COUNTERS.sixCardBonusWager = 0;
 }
 
+function didPlayerWinHighCardTieBreaker() {
+    const playerCardRanks = playerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
+    const dealerCardRanks = dealerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
+    const orderToCheck = [2, 1, 0];
+    for (let i of orderToCheck) {
+        if (playerCardRanks[i] > dealerCardRanks[i]) {
+            return true;
+        }
+        if (playerCardRanks[i] < dealerCardRanks[i]) {
+            return false;
+        }
+    }
+    return false;
+}
+
 function playGame() {
     if (!isRoundActive) {
         return;
     }
     placeWager(WAGER_COUNTERS.anteWager, "PLAY");
     $("#player-balance").html(`$${playerBalance}`);
-    const dealerHand = deck.slice(3, 6);
+    dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
+    const didPlayerWin = didPlayerWinHighCardTieBreaker();
+    const winnerMessage = didPlayerWin ? "Player wins!" : "Dealer wins.";
+    $("#infoBox").html(winnerMessage);
     reset();
 }
 
@@ -79,7 +115,7 @@ function fold() {
     if (!isRoundActive) {
         return;
     }
-    const dealerHand = deck.slice(3, 6);
+    dealerHand = deck.slice(3, 6);
     displayHand(dealerHand, "dealer");
     $("#anteWager").html(WAGER_COUNTERS.anteWager);
     $("#pairPlusWager").html(WAGER_COUNTERS.pairPlusWager);

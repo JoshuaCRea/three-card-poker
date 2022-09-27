@@ -505,3 +505,19 @@ body {
     width: 120px;
     margin: 5px;
 }
+
+#infoBox {
+    top: 195px;
+    left: 525px;
+    width: 543px;
+    text-align: center;
+    padding-top: 30px;
+    height: 85px;
+    font-size: 36px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    color: #FAF5E4;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000000;
+}
