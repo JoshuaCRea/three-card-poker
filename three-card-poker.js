@@ -83,10 +83,9 @@ function reset() {
 }
 
 function didPlayerWinHighCardTieBreaker() {
-    const playerCardRanks = playerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-    const dealerCardRanks = dealerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-    const orderToCheck = [2, 1, 0];
-    for (let i of orderToCheck) {
+    const playerCardRanks = playerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
+    const dealerCardRanks = dealerHand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => b - a);
+    for (let i = 0; i < playerCardRanks.length; i++) {
         if (playerCardRanks[i] > dealerCardRanks[i]) {
             return true;
         }
@@ -120,6 +119,7 @@ function fold() {
     $("#anteWager").html(WAGER_COUNTERS.anteWager);
     $("#pairPlusWager").html(WAGER_COUNTERS.pairPlusWager);
     $("#sixCardBonusWager").html(WAGER_COUNTERS.sixCardBonusWager);
+    $("#infoBox").html("You folded.");
     reset();
 }
 
