@@ -123,7 +123,17 @@ function isTheHandAStraight(hand) {
     return orderedRanks[1] === orderedRanks[0] + 1 && orderedRanks[2] === orderedRanks[1] + 1;
 }
 
+function isTheHandAThreeOfAKind(hand) {
+    return new Set(hand.map(card => card.charAt(0))).size === 1;
+}
+
 function didPlayerHaveBetterHand(pHand, dHand) {
+    if (isTheHandAThreeOfAKind(pHand) && !isTheHandAThreeOfAKind(dHand)) {
+        return true;
+    }
+    if (!isTheHandAThreeOfAKind(pHand) && isTheHandAThreeOfAKind(dHand)) {
+        return false;
+    }
     if (isTheHandAStraight(pHand) && !isTheHandAStraight(dHand)) {
         return true;
     }
@@ -237,6 +247,10 @@ window.onload = () => {
 
 // TESTS
 
+console.log(didPlayerHaveBetterHand(["TD", "JS", "9C"], ["6C", "6H", "6S"]) === false); // player has straight, dealer has trips
+console.log(didPlayerHaveBetterHand(["4D", "4S", "4C"], ["6C", "7H", "8S"]) === true); // dealer has straight, player has trips
+console.log(didPlayerHaveBetterHand(["8D", "8S", "8C"], ["7C", "7H", "7S"]) === true); // both have trips, player's is higher
+console.log(didPlayerHaveBetterHand(["JD", "JS", "JC"], ["QC", "QH", "QS"]) === false); // both have trips, dealer's is higher
 console.log(didPlayerHaveBetterHand(["TD", "JS", "9C"], ["KC", "6H", "9S"]) === true); // player has mid straight, dealer does not
 console.log(didPlayerHaveBetterHand(["3D", "AS", "9C"], ["7C", "8H", "9S"]) === false); // dealer has mid straight, player does not
 console.log(didPlayerHaveBetterHand(["3D", "2S", "AC"], ["KC", "6H", "9S"]) === true); // player has wheel straight, dealer has none
