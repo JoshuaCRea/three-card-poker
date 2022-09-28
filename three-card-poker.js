@@ -131,6 +131,18 @@ function _isTheHandAStraightFlush(hand) {
     return _isTheHandAFlush(hand) && _isTheHandAStraight(hand);
 }
 
+function _determineHandType(hand) {
+    const HAND_TYPES = {
+        "pair": _isTheHandAPair(hand),
+        "flush": _isTheHandAFlush(hand),
+        "straight": _isTheHandAStraight(hand),
+        "threeOfAKind": _isTheHandAThreeOfAKind(hand),
+        "straightFlush": _isTheHandAStraightFlush(hand),
+    };
+    const precedenceOfHands = ["straightFlush", "threeOfAKind", "straight", "flush", "pair"];
+    return precedenceOfHands.find(handType => HAND_TYPES[handType] === true);
+};
+
 function _didPlayerHaveBetterHand(pHand, dHand) {
     if (_isTheHandAStraightFlush(pHand) && !_isTheHandAStraightFlush(dHand)) {
         return true;
@@ -257,6 +269,12 @@ window.onload = () => {
 
 // TESTS
 
+// console.log(_determineHandType(["QD", "JD", "TD"]) === "straightFlush")
+// console.log(_determineHandType(["AD", "AS", "AH"]) === "threeOfAKind")
+// console.log(_determineHandType(["9D", "JS", "TH"]) === "straight")
+// console.log(_determineHandType(["6D", "JD", "AD"]) === "flush")
+// console.log(_determineHandType(["6D", "JC", "6H"]) === "pair")
+// console.log(_determineHandType(["6D", "JD", "3H"]) === undefined)
 // console.log(_didPlayerHaveBetterHand(["TD", "JD", "9D"], ["KC", "KH", "KS"]) === true); // player has mid straight flush, dealer has trips
 // console.log(_didPlayerHaveBetterHand(["KC", "KH", "KS"], ["TD", "JD", "9D"]) === false); // dealer has mid straight flush, player has trips
 // console.log(_didPlayerHaveBetterHand(["3D", "4H", "5S"], ["7C", "8C", "9C"]) === false); // dealer has mid straight flush, player has straight
