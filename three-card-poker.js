@@ -209,6 +209,7 @@ function playGame() {
     const didPlayerWin = _didPlayerHaveBetterHand(playerHand, dealerHand);
     const winnerMessage = didPlayerWin ? "Player wins!" : "Dealer wins.";
     $("#infoBox").html(winnerMessage);
+    _highlightTables(_determineHandType(playerHand));
     _reset();
 }
 
@@ -245,6 +246,15 @@ function _getShuffledDeck() {
     }
     return newDeck;
 }
+
+function _highlightTables(hand) {
+    const ANTE_BONUS_ROWS_FOR_HIGHLIGHT = {
+        "straightFlush": "#abrow1",
+        "straight": "#abrow3",
+        "threeOfAKind": "#abrow2",
+    };
+    $(ANTE_BONUS_ROWS_FOR_HIGHLIGHT[hand]).addClass("highlight");
+};
 
 window.onload = () => {
     const CLICK_BEHAVIORS = {

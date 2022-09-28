@@ -233,18 +233,17 @@ body {
 }
 
 .payout-table {
-    top: 100px;
-    left: 100px;
-    min-width: 100px;
+    width: 251px;
     font-size: 0.9em;
     font-family: 'Merriweather', serif;;
     min-width: 175px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.557);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.797);
     border-collapse: collapse;
 }
 
 .payout-table th,
 .payout-table td {
+    text-align: center;
     padding: 5px 15px;
 }
 
@@ -262,7 +261,7 @@ body {
 
 #pair-plus-payout-table {
     top: 475px;
-    left: 1142px;
+    left: 1137px;
 }
 
 #pair-plus-payout-table thead tr {
@@ -280,7 +279,7 @@ body {
 
 #six-card-payout-table {
     top: 475px;
-    left: 220px;
+    left: 210px;
 }
 
 #six-card-payout-table thead tr {
@@ -298,7 +297,7 @@ body {
 
 #ante-bonus-table {
     top: 653px;
-    left: 468px;
+    left: 450px;
 }
 
 #ante-bonus-table thead tr {
@@ -538,4 +537,14 @@ body {
     border-style: solid;
     /* border-color: #000000; */
     border-color: transparent;
+}
+
+.table-hand-name {
+    text-align: left;
+}
+
+.highlight {
+    font-weight: 900;
+    font-size: 12pt;
+    padding: 0px 0px;
 }
