@@ -87,6 +87,7 @@ body {
 #ante-diamond-label {
     top: 700px;
     color: #FEC260;
+    color: #FAF5E4;
     transform: rotate(315deg) translate(-15px, 33px);
 }
 
@@ -119,6 +120,7 @@ body {
     background-color: #00a2b7;
     background-image: url("https://ucarecdn.com/105c73f7-13c7-4a5d-8fcd-012b1b406c45/felt.png");
     border-color: #ffea00;
+    color: #FAF5E4;
 }
 
 .wager-circle {
@@ -316,6 +318,18 @@ body {
     width: 250px;
     top: 44px;
     left: 1104px;
+    top: 50px;
+    left: 245px;
+    opacity: 50%;
+}
+
+#logo {
+    width: 325px;
+    top: 55px;
+    left: 205px;
+    top: 74px;
+    left: 1070px;
+    opacity: 50%;
 }
 
 .chip-stack img {
@@ -349,9 +363,12 @@ body {
 .chip-tally {
     visibility: hidden;
     font-size: 20pt;
+    padding-right: 5px;
     font-family: "Arvo", serif;
     color: #FAF5E4;
+    border-radius: 15px;
     z-index: 1;
+    background-color: #0000006c;
 }
 
 #ante-chiptally {
@@ -516,8 +533,9 @@ body {
     font-size: 36px;
     font-family: 'Barlow', sans-serif;
     font-weight: 700;
-    color: #FAF5E4;
+    color: #ffd798;
     border-width: 2px;
     border-style: solid;
-    border-color: #000000;
+    /* border-color: #000000; */
+    border-color: transparent;
 }

@@ -106,21 +106,35 @@ function isTheHandAPair(hand) {
     return new Set(hand.map(card => card.charAt(0))).size === 2;
 }
 
+function isTheHandAFlush(hand) {
+    return new Set(hand.map(card => card.charAt(1))).size === 1;
+}
+
 function didPlayerHaveBetterHand(pHand, dHand) {
+    if (isTheHandAFlush(pHand) && !isTheHandAFlush(dHand)) {
+        return true;
+    }
+    if (!isTheHandAFlush(pHand) && isTheHandAFlush(dHand)) {
+        return false;
+    }
+    if (isTheHandAFlush(pHand) && isTheHandAFlush(dHand)) {
+        return didPlayerWinHighCardTieBreaker(pHand, dHand);
+    }
     if (isTheHandAPair(pHand) && !isTheHandAPair(dHand)) {
         return true;
-    } else if (!isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
+    }
+    if (!isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
         return false;
-    } else if (isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
+    }
+    if (isTheHandAPair(pHand) && isTheHandAPair(dHand)) {
         const playerPair = CARD_RANKS[Object.entries(new Counter(pHand.map(card => card.charAt(0)))).filter(rank => rank[1] === 2).toString(10)[0]];
         const dealerPair = CARD_RANKS[Object.entries(new Counter(dHand.map(card => card.charAt(0)))).filter(rank => rank[1] === 2).toString(10)[0]];
         if (playerPair - dealerPair > 0) {
             return true;
         }
         return didPlayerWinHighCardTieBreaker(pHand, dHand);
-    } else {
-        return didPlayerWinHighCardTieBreaker(pHand, dHand);
     }
+    return didPlayerWinHighCardTieBreaker(pHand, dHand);
 }
 
 function playGame() {
@@ -195,6 +209,11 @@ window.onload = () => {
 
 // TESTS
 
+// console.log(didPlayerHaveBetterHand(["3C", "7C", "9C"], ["4C", "TH", "2S"]) === true); // player has flush, dealer does not
+// console.log(didPlayerHaveBetterHand(["7C", "7S", "9D"], ["4H", "TH", "2H"]) === false); // dealer has flush, player does not
+// console.log(didPlayerHaveBetterHand(["JC", "7C", "9C"], ["4H", "TH", "2H"]) === true); // player has higher flush than dealer
+// console.log(didPlayerHaveBetterHand(["3C", "7C", "9C"], ["4H", "TH", "2H"]) === false); // dealer has higher flush than player
+// console.log(didPlayerHaveBetterHand(["3C", "7C", "9C"], ["3H", "7H", "9H"]) === false); // both have tied flush, player has better high card
 // console.log(didPlayerHaveBetterHand(["3C", "7H", "9S"], ["4C", "TH", "2S"]) === false); //dealer has highest card
 // console.log(didPlayerHaveBetterHand(["3C", "QH", "9S"], ["4C", "TH", "2S"]) === true); //player has highest card
 // console.log(didPlayerHaveBetterHand(["TC", "4H", "2D"], ["4C", "TH", "2S"]) === false); //both have equal cards
@@ -202,5 +221,5 @@ window.onload = () => {
 // console.log(didPlayerHaveBetterHand(["3C", "3H", "9S"], ["4C", "TH", "2S"]) === true); // player has pair, dealer has highest card
 // console.log(didPlayerHaveBetterHand(["2C", "4H", "4D"], ["4C", "4S", "7S"]) === false); // both have equal pairs, dealer has high card outside of pair
 // console.log(didPlayerHaveBetterHand(["7C", "4H", "4D"], ["4C", "4S", "2S"]) === true); // both have equal pairs, player has high card outside of pair
-// console.log(didPlayerHaveBetterHand(["TC", "4H", "4D"], ["4C", "4S", "TS"]) === false);// both have equal pairs, equal high cards
-// console.log(didPlayerHaveBetterHand(["7C", "3H", "3D"], ["8C", "2D", "2S"]) === true);// both have equal pairs, player's pair is higher
+// console.log(didPlayerHaveBetterHand(["TC", "4H", "4D"], ["4C", "4S", "TS"]) === false); // both have equal pairs, equal high cards
+// console.log(didPlayerHaveBetterHand(["7C", "3H", "3D"], ["8C", "2D", "2S"]) === true); // both have equal pairs, player's pair is higher
