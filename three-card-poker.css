@@ -474,31 +474,31 @@ body {
 
 .ui-tally {
     font-family: "Merriweather", serif;
-    font-size: 18pt;
+    font-size: 16pt;
     color: #FAF5E4;
     max-height: 30px;
 }
 
 #current-player-balance-display {
-    top: 1000px;
+    top: 990px;
     left: 620px;
 }
 
 #total-current-wager-display {
-    top: 1040px;
+    top: 1015px;
     left: 520px;
 }
 
 #total-wager-display {
     color: #3FA796;
     font-family: "Arvo", serif;
-    font-size: 24pt;
+    font-size: 20pt;
 }
 
 #player-balance-display {
     color: #a2ffa2;
     font-family: "Arvo", serif;
-    font-size: 24pt;
+    font-size: 20pt;
 }
 
 #player-card-display {
@@ -515,6 +515,61 @@ body {
     height: 125px;
     width: 500px;
     position: absolute;
+}
+
+#ante-winnings-display {
+    top: 1045px;
+    left: 703px;
+}
+
+#play-winnings-display {
+    top: 1070px;
+    left: 708px;
+}
+
+#ante-bonus-winnings-display {
+    top: 1095px;
+    left: 623px;
+}
+
+#pair-plus-bonus-winnings-display {
+    top: 1120px;
+    left: 570px;
+}
+
+#total-winnings-display {
+    top: 1145px;
+    left: 567px;
+}
+
+#anteWinnings {
+    color: #ffdda6;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
+}
+
+#playWinnings {
+    color: #ffdda6;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
+}
+
+#anteBonusWinnings {
+    color: #ffdda6;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
+}
+
+#pairPlusBonusWinnings {
+    color: #f1c5c5;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
+}
+
+#totalWinnings {
+    color: #3FA796;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
 }
 
 .card {

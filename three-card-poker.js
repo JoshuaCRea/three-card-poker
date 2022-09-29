@@ -218,12 +218,49 @@ function _highlightTables(handType, bet) {
 
 function payout() {
     const handType = _determineHandType(playerHand);
+    let anteWinnings = 0;
+    let playWinnings = 0;
+    let anteBonusWinnings = 0;
+    let pairPlusWinnings = 0;
+    let totalWinnings = 0;
+    const ANTE_BONUS_MULTIPLIER = {
+        "straightFlush": 5,
+        "threeOfAKind": 4,
+        "straight": 1,
+    };
+    const PAIR_PLUS_BONUS_MULTIPLIER = {
+        "straightFlush": 40,
+        "threeOfAKind": 30,
+        "straight": 5,
+        "flush": 4,
+        "pair": 1,
+    };
     if (handType) {
+        if (ANTE_BONUS_MULTIPLIER[handType]) {
+            _highlightTables(handType, "ante");
+            anteBonusWinnings = WAGER_COUNTERS.anteWager * ANTE_BONUS_MULTIPLIER[handType];
+        }
         if (WAGER_COUNTERS.pairPlusWager > 0) {
             _highlightTables(handType, "pairPlus");
+            pairPlusWinnings = WAGER_COUNTERS.pairPlusWager + WAGER_COUNTERS.pairPlusWager * PAIR_PLUS_BONUS_MULTIPLIER[handType];
         }
-        _highlightTables(handType, "ante");
     }
+    if (_doesDealerQualify(dealerHand)) {
+        if (_didPlayerHaveBetterHand(playerHand, dealerHand)) {
+            anteWinnings = WAGER_COUNTERS.anteWager * 2;
+            playWinnings = WAGER_COUNTERS.playWager * 2;
+        }
+    } else {
+        anteWinnings = WAGER_COUNTERS.anteWager;
+    }
+    totalWinnings = anteWinnings + playWinnings + pairPlusWinnings + anteBonusWinnings;
+    playerBalance += totalWinnings;
+    $("#player-balance-display").html(`$${playerBalance}`);
+    $("#anteWinnings").html(`$${anteWinnings}`);
+    $("#playWinnings").html(`$${playWinnings}`);
+    $("#anteBonusWinnings").html(`$${anteBonusWinnings}`);
+    $("#pairPlusBonusWinnings").html(`$${pairPlusWinnings}`);
+    $("#totalWinnings").html(`$${totalWinnings}`);
 }
 
 function playGame() {
@@ -307,6 +344,11 @@ window.onload = () => {
     $("#deal-button").click(() => dealToPlayer());
     $("#play-button").click(() => playGame());
     $("#fold-button").click(() => fold());
+    $("#anteWinnings").html("$0");
+    $("#playWinnings").html("$0");
+    $("#anteBonusWinnings").html("$0");
+    $("#pairPlusBonusWinnings").html("$0");
+    $("#totalWinnings").html("$0");
 }
 
 // TESTS
