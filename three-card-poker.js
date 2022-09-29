@@ -198,6 +198,34 @@ function _didPlayerHaveBetterHand(pHand, dHand) {
     return _didPlayerWinHighCardTieBreaker(pHand, dHand);
 }
 
+function _highlightTables(handType, bet) {
+    const BONUS_ROWS_FOR_HIGHLIGHT = {
+        pairPlus: {
+            "straightFlush": "#pprow1",
+            "flush": "#pprow4",
+            "straight": "#pprow3",
+            "threeOfAKind": "#pprow2",
+            "pair": "#pprow5",
+        },
+        ante: {
+            "straightFlush": "#abrow1",
+            "straight": "#abrow3",
+            "threeOfAKind": "#abrow2",
+        },
+    }
+    $(BONUS_ROWS_FOR_HIGHLIGHT[bet][handType]).addClass("highlight");
+};
+
+function payout() {
+    const handType = _determineHandType(playerHand);
+    if (handType) {
+        if (WAGER_COUNTERS.pairPlusWager > 0) {
+            _highlightTables(handType, "pairPlus");
+        }
+        _highlightTables(handType, "ante");
+    }
+}
+
 function playGame() {
     if (!isRoundActive) {
         return;
@@ -209,7 +237,7 @@ function playGame() {
     const didPlayerWin = _didPlayerHaveBetterHand(playerHand, dealerHand);
     const winnerMessage = didPlayerWin ? "Player wins!" : "Dealer wins.";
     $("#infoBox").html(winnerMessage);
-    _highlightTables(_determineHandType(playerHand));
+    payout();
     _reset();
 }
 
@@ -223,6 +251,7 @@ function fold() {
     $("#pairPlusWager").html(WAGER_COUNTERS.pairPlusWager);
     $("#sixCardBonusWager").html(WAGER_COUNTERS.sixCardBonusWager);
     $("#infoBox").html("You folded.");
+    payout();
     _reset();
 }
 
@@ -246,15 +275,6 @@ function _getShuffledDeck() {
     }
     return newDeck;
 }
-
-function _highlightTables(hand) {
-    const ANTE_BONUS_ROWS_FOR_HIGHLIGHT = {
-        "straightFlush": "#abrow1",
-        "straight": "#abrow3",
-        "threeOfAKind": "#abrow2",
-    };
-    $(ANTE_BONUS_ROWS_FOR_HIGHLIGHT[hand]).addClass("highlight");
-};
 
 window.onload = () => {
     const CLICK_BEHAVIORS = {
