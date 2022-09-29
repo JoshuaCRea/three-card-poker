@@ -234,11 +234,23 @@ function playGame() {
     $("#player-balance").html(`$${playerBalance}`);
     dealerHand = deck.slice(3, 6);
     _displayHand(dealerHand, "dealer");
-    const didPlayerWin = _didPlayerHaveBetterHand(playerHand, dealerHand);
-    const winnerMessage = didPlayerWin ? "Player wins!" : "Dealer wins.";
-    $("#infoBox").html(winnerMessage);
+    let infoBoxMessage;
+    if (_doesDealerQualify(dealerHand)) {
+        infoBoxMessage = _didPlayerHaveBetterHand(playerHand, dealerHand) ? "Player wins!" : "Dealer wins.";
+    } else {
+        infoBoxMessage = "Dealer does not qualify.";
+    }
+    $("#infoBox").html(infoBoxMessage);
     payout();
     _reset();
+}
+
+function _doesDealerQualify(hand) {
+    if (_determineHandType(hand) === undefined) {
+        const dealerRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
+        return dealerRanks[2] >= CARD_RANKS["Q"];
+    }
+    return true;
 }
 
 function fold() {
