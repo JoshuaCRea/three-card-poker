@@ -103,6 +103,15 @@ function _didPlayerWinHighCardTieBreaker(pHand, dHand) {
     return false;
 }
 
+function _isTheHandAFiveCardFlush(hand) {
+    const countOfSuits = new Counter(hand.map(card => card.charAt(1)));
+    const countOfDominantSuit = Math.max(...Object.keys(countOfSuits).map(suit => countOfSuits[suit]));
+    if (countOfDominantSuit >= 5) {
+        return true;
+    }
+    return false
+}
+
 function _isTheHandAFiveCardStraight(hand) {
     const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
     const lowStraight = [];
@@ -125,16 +134,6 @@ function _isTheHandAFiveCardStraight(hand) {
     }
     return false;
 }
-
-console.log(_isTheHandAFiveCardStraight(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
-console.log(_isTheHandAFiveCardStraight(["8C", "5D", "3S", "7C", "6H", "4D"]) === true); // straight, 3 - 8
-console.log(_isTheHandAFiveCardStraight(["8C", "5D", "2S", "7C", "6H", "4D"]) === true); // straight, 4 - 8, sixth card below
-console.log(_isTheHandAFiveCardStraight(["8C", "5D", "JS", "7C", "6H", "4D"]) === true); // straight, 4 - 8, sixth card above
-console.log(_isTheHandAFiveCardStraight(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
-console.log(_isTheHandAFiveCardStraight(["8C", "3D", "2S", "7C", "6H", "4D"]) === false); // all cards in sequence, but not the same sequence
-console.log(_isTheHandAFiveCardStraight(["2C", "6D", "7S", "9C", "9H", "TD"]) === false);
-
-
 
 function _isTheHandAPair(hand) {
     return new Set(hand.map(card => card.charAt(0))).size === 2;
@@ -428,3 +427,13 @@ window.onload = () => {
 // console.log(_didPlayerHaveBetterHand(["7C", "3H", "3D"], ["8C", "2D", "2S"]) === true); // both have pairs, player's pair is higher
 // console.log(_didPlayerHaveBetterHand(["8C", "2D", "2S"], ["7C", "3H", "3D"]) === false); // both have pairs, dealer's pair is higher
 // console.log(_didPlayerHaveBetterHand(["8C", "2D", "2S"], ["7C", "3H", "6D"]) === true); // player beats dealer, dealer doesn't qualify
+// console.log(_isTheHandAFiveCardStraight(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
+// console.log(_isTheHandAFiveCardStraight(["8C", "5D", "3S", "7C", "6H", "4D"]) === true); // straight, 3 - 8
+// console.log(_isTheHandAFiveCardStraight(["8C", "5D", "2S", "7C", "6H", "4D"]) === true); // straight, 4 - 8, sixth card below
+// console.log(_isTheHandAFiveCardStraight(["8C", "5D", "JS", "7C", "6H", "4D"]) === true); // straight, 4 - 8, sixth card above
+// console.log(_isTheHandAFiveCardStraight(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
+// console.log(_isTheHandAFiveCardStraight(["8C", "3D", "2S", "7C", "6H", "4D"]) === false); // all cards in sequence, but not the same sequence
+// console.log(_isTheHandAFiveCardStraight(["2C", "6D", "7S", "9C", "9H", "TD"]) === false);
+// console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
+// console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
+// console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
