@@ -77,8 +77,8 @@ function dealToPlayer() {
     }
     isRoundActive = true;
     deck = _getShuffledDeck();
-    playerHand = ["8H", "9H", "TH"]
-    // playerHand = deck.slice(0, 3);
+    // playerHand = ["8H", "9H", "TH"]
+    playerHand = deck.slice(0, 3);
     _displayHand(playerHand, "player");
 }
 
@@ -103,35 +103,24 @@ function _didPlayerWinHighCardTieBreaker(pHand, dHand) {
     return false;
 }
 
-// function _isTheHandAFiveCardStraight(hand) {
-//     const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-//     if (orderedRanks[1] === orderedRanks[0] + 1 && orderedRanks[2] === orderedRanks[1] + 1 && orderedRanks[3] === orderedRanks[2] + 1 && orderedRanks[4] === orderedRanks[3] + 1) {
-//         return true;
-//     }
-//     if (orderedRanks[2] === orderedRanks[1] + 1 && orderedRanks[3] === orderedRanks[2] + 1 && orderedRanks[4] === orderedRanks[3] + 1 && orderedRanks[5] === orderedRanks[4] + 1) {
-//         return true;
-//     }
-//     return false;
-// }
-
 function _isTheHandAFiveCardStraight(hand) {
     const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-    const foo = [];
-    let foo2 = [];
+    const lowStraight = [];
+    const highStraight = [];
     for (let i = 0; i < 4; i++) {
         if (orderedRanks[i] + 1 === orderedRanks[i + 1]) {
-            foo.push(true);
+            lowStraight.push(true);
         }
     }
-    if (foo.length === 4) {
+    if (lowStraight.length === 4) {
         return true;
     }
     for (let i = 1; i < 5; i++) {
         if (orderedRanks[i] + 1 === orderedRanks[i + 1] === true) {
-            foo2.push(true);
+            highStraight.push(true);
         }
     }
-    if (foo2.length === 4) {
+    if (highStraight.length === 4) {
         return true;
     }
     return false;
