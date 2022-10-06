@@ -46,7 +46,7 @@ function _getSelectedWagerAmount() {
 }
 
 function placeWager(wagerAmount, wagerType) {
-    if (WAGER_COUNTERS.anteWager === 0 && WAGER_COUNTERS.pairPlusWager === 0 && WAGER_COUNTERS.sixCardBonusWager === 0){
+    if (WAGER_COUNTERS.anteWager === 0 && WAGER_COUNTERS.pairPlusWager === 0 && WAGER_COUNTERS.sixCardBonusWager === 0) {
         $("#play-bet-chipstack").css("visibility", "hidden");
         $("#play-chiptally").css("visibility", "hidden");
         $("#ante-bet-chipstack").css("visibility", "hidden");
@@ -151,7 +151,10 @@ function _isTheHandAFiveCardFlush(hand) {
 
 function _isTheHandAFiveCardStraight(hand) {
     const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-    if (orderedRanks.includes(12) && orderedRanks.includes(0) && orderedRanks.includes(1) && orderedRanks.includes(2) && orderedRanks.includes(3)) {
+    const wheelStraightRanks = [0, 1, 2, 3, 12];
+    if (wheelStraightRanks.every(rank => {
+        return orderedRanks.includes(rank);
+    })) {
         return true;
     }
     const lowStraight = [];
@@ -346,7 +349,7 @@ function playGame() {
     _displayHand(dealerHand, "dealer");
     let infoBoxMessage;
     if (_doesDealerQualify(dealerHand)) {
-        infoBoxMessage = _didPlayerHaveBetterHand(playerHand, dealerHand) ?"Player wins!" : "Dealer wins.";
+        infoBoxMessage = _didPlayerHaveBetterHand(playerHand, dealerHand) ? "Player wins!" : "Dealer wins.";
     } else {
         infoBoxMessage = "Dealer does not qualify.";
     }
@@ -476,11 +479,11 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardStraight(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
 // console.log(_isTheHandAFiveCardStraight(["8C", "3D", "2S", "7C", "6H", "4D"]) === false); // all cards in sequence, but not the same sequence
 // console.log(_isTheHandAFiveCardStraight(["2C", "6D", "7S", "9C", "9H", "TD"]) === false);
+// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "TD"]) === true); // wheel straight
+// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "6D"]) === true); // wheel straight
 // console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
-// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "TD"]) === true); // wheel straight
-// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "6D"]) === true); // wheel straight
 
 
 
