@@ -103,6 +103,8 @@ function rebet() {
     WAGER_COUNTERS.sixCardBonusWager = tempSixCardBonusWager;
     $("#play-bet-chipstack").css("visibility", "hidden");
     $("#play-chiptally").css("visibility", "hidden");
+    $("player-card-display").css("visibility", "hidden");
+    $("dealer-card-display").css("visibility", "hidden");
 }
 
 function dealToPlayer() {
@@ -149,6 +151,9 @@ function _isTheHandAFiveCardFlush(hand) {
 
 function _isTheHandAFiveCardStraight(hand) {
     const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
+    if (orderedRanks.includes(12) && orderedRanks.includes(0) && orderedRanks.includes(1) && orderedRanks.includes(2) && orderedRanks.includes(3)) {
+        return true;
+    }
     const lowStraight = [];
     const highStraight = [];
     for (let i = 0; i < 4; i++) {
@@ -474,6 +479,8 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
+// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "TD"]) === true); // wheel straight
+// console.log(_isTheHandAFiveCardStraight(["AC", "2D", "3S", "4C", "5H", "6D"]) === true); // wheel straight
 
 
 
