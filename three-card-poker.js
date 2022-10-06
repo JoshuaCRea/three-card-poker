@@ -140,6 +140,30 @@ function _didPlayerWinHighCardTieBreaker(pHand, dHand) {
     return false;
 }
 
+function isTheHandAFiveCardFourOfAKind(hand) {
+    const handRanks = [];
+    hand.forEach(card => {
+        handRanks.push(CARD_RANKS[card.charAt(0)]);
+    })
+    const fours = [];
+    for (let i = 0; i < handRanks.length; i++) {
+        let count = 0;
+        const theCurrentElement = handRanks[i];
+        for (let x = 0; x < handRanks.length; x++) {
+            if (handRanks[x] === theCurrentElement) {
+                count += 1;
+            }
+        }
+        if (count === 4) {
+            fours.push(theCurrentElement);
+        }
+    }
+    if (fours.length === 4) {
+        return true;
+    }
+    return false;
+}
+
 function isTheHandAFiveCardFullHouse(hand) {
     const handRanks = [];
     hand.forEach(card => {
@@ -552,6 +576,12 @@ window.onload = () => {
 // console.log(isTheHandAFiveCardFullHouse(["TH", "5H", "5S", "5D", "QC", "QS"]) === true);
 // console.log(isTheHandAFiveCardFullHouse(["QH", "5H", "5S", "5D", "QC", "QS"]) === true);
 // console.log(isTheHandAFiveCardFullHouse(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
+// console.log(isTheHandAFiveCardFourOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === false);
+// console.log(isTheHandAFiveCardFourOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
+// console.log(isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === true);
+// console.log(isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(isTheHandAFiveCardFourOfAKind(["QH", "5H", "5S", "QD", "QC", "QS"]) === true);
+// console.log(isTheHandAFiveCardFourOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
 
 
 
