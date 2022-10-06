@@ -6,6 +6,9 @@ let playerBalance = initialPlayerBalance;
 let totalWagerAmount = 0;
 let isRoundActive = false;
 let deck = [];
+let tempAnteWager = 0;
+let tempPairPlusWager = 0;
+let tempSixCardBonusWager = 0;
 
 class Counter {
     constructor(array) {
@@ -43,6 +46,19 @@ function _getSelectedWagerAmount() {
 }
 
 function placeWager(wagerAmount, wagerType) {
+    if (WAGER_COUNTERS.anteWager === 0 && WAGER_COUNTERS.pairPlusWager === 0 && WAGER_COUNTERS.sixCardBonusWager === 0){
+        $("#play-bet-chipstack").css("visibility", "hidden");
+        $("#play-chiptally").css("visibility", "hidden");
+        $("#ante-bet-chipstack").css("visibility", "hidden");
+        $("#ante-chiptally").css("visibility", "hidden");
+        $("#pp-bet-chipstack").css("visibility", "hidden");
+        $("#pp-chiptally").css("visibility", "hidden");
+        $("#sixcb-bet-chipstack").css("visibility", "hidden");
+        $("#sixcb-chiptally").css("visibility", "hidden");
+        $("player-card-display").css("visibility", "hidden");
+        $("dealer-card-display").css("visibility", "hidden");
+
+    }
     playerBalance -= wagerAmount;
     totalWagerAmount += wagerAmount;
     $("#player-balance-display").html(`$${playerBalance}`);
@@ -71,13 +87,31 @@ function placeWager(wagerAmount, wagerType) {
     $(`#${WAGER_TYPES[wagerType].elementIdPrefix}-chiptally`).html(`$${WAGER_COUNTERS[WAGER_TYPES[wagerType].wagerCounter]}`);
 }
 
+function _loadTemps() {
+    tempAnteWager = WAGER_COUNTERS.anteWager;
+    tempPairPlusWager = WAGER_COUNTERS.pairPlusWager;
+    tempSixCardBonusWager = WAGER_COUNTERS.sixCardBonusWager;
+}
+
+function rebet() {
+    if (isRoundActive) {
+        return;
+    }
+    WAGER_COUNTERS.playWager = 0;
+    WAGER_COUNTERS.anteWager = tempAnteWager;
+    WAGER_COUNTERS.pairPlusWager = tempPairPlusWager;
+    WAGER_COUNTERS.sixCardBonusWager = tempSixCardBonusWager;
+    $("#play-bet-chipstack").css("visibility", "hidden");
+    $("#play-chiptally").css("visibility", "hidden");
+}
+
 function dealToPlayer() {
     if (WAGER_COUNTERS.anteWager === 0 || isRoundActive) {
         return;
     }
     isRoundActive = true;
     deck = _getShuffledDeck();
-    // playerHand = ["8H", "9H", "TH"]
+    _loadTemps();
     playerHand = deck.slice(0, 3);
     _displayHand(playerHand, "player");
 }
@@ -85,6 +119,7 @@ function dealToPlayer() {
 function _reset() {
     isRoundActive = false;
     WAGER_COUNTERS.anteWager = 0;
+    WAGER_COUNTERS.playWager = 0;
     WAGER_COUNTERS.pairPlusWager = 0;
     WAGER_COUNTERS.sixCardBonusWager = 0;
 }
@@ -109,7 +144,7 @@ function _isTheHandAFiveCardFlush(hand) {
     if (countOfDominantSuit >= 5) {
         return true;
     }
-    return false
+    return false;
 }
 
 function _isTheHandAFiveCardStraight(hand) {
@@ -306,7 +341,7 @@ function playGame() {
     _displayHand(dealerHand, "dealer");
     let infoBoxMessage;
     if (_doesDealerQualify(dealerHand)) {
-        infoBoxMessage = _didPlayerHaveBetterHand(playerHand, dealerHand) ? "Player wins!" : "Dealer wins.";
+        infoBoxMessage = _didPlayerHaveBetterHand(playerHand, dealerHand) ?"Player wins!" : "Dealer wins.";
     } else {
         infoBoxMessage = "Dealer does not qualify.";
     }
@@ -338,6 +373,7 @@ function fold() {
 }
 
 function _displayHand(hand, person) {
+    $(`#${person}-card-display`).css("visibility", "visible");
     const handDisplay = hand.map(card => `<img class='card' src='cards/${card}.svg'></img>`);
     $(`#${person}-card-display`).html(handDisplay);
 }
@@ -376,6 +412,7 @@ window.onload = () => {
     $("#total-wager-display").html(`$${totalWagerAmount}`);
     $("#deal-button").click(() => dealToPlayer());
     $("#play-button").click(() => playGame());
+    $("#rebet-button").click(() => rebet());
     $("#fold-button").click(() => fold());
     $("#anteWinnings").html("$0");
     $("#playWinnings").html("$0");
@@ -437,3 +474,7 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
+
+
+
+    // playerHand = ["8H", "9H", "TH"]

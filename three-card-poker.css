@@ -507,6 +507,7 @@ body {
     height: 125px;
     width: 500px;
     position: absolute;
+    visibility: hidden;
 }
 
 #dealer-card-display {
@@ -515,6 +516,7 @@ body {
     height: 125px;
     width: 500px;
     position: absolute;
+    visibility: hidden;
 }
 
 #ante-winnings-display {
