@@ -178,6 +178,34 @@ function _isTheHandAFiveCardStraight(hand) {
     return false;
 }
 
+function isTheHandAFiveCardThreeOfAKind(hand) {
+    const handRanks = [];
+    hand.forEach(card => {
+        handRanks.push(CARD_RANKS[card.charAt(0)]);
+    })
+    const twos = [];
+    const threes = [];
+    for (let i = 0; i < handRanks.length; i++) {
+        let count = 0;
+        const theCurrentElement = handRanks[i];
+        for (let x = 0; x < handRanks.length; x++) {
+            if (handRanks[x] === theCurrentElement) {
+                count += 1;
+            }
+        }
+        if (count === 3) {
+            threes.push(theCurrentElement);
+        }
+        if (count === 2) {
+            twos.push(theCurrentElement);
+        }
+    }
+    if (threes.length === 3 && twos.length === 0) {
+        return true;
+    }
+    return false;
+}
+
 function _isTheHandAPair(hand) {
     return new Set(hand.map(card => card.charAt(0))).size === 2;
 }
@@ -484,6 +512,12 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
+// console.log(isTheHandAFiveCardThreeOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === true);
+// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
+// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === false);
+// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(isTheHandAFiveCardThreeOfAKind(["QH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(isTheHandAFiveCardThreeOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
 
 
 
