@@ -131,7 +131,8 @@ function dealToPlayer() {
     isRoundActive = true;
     deck = _getShuffledDeck();
     _loadTemps();
-    playerHand = deck.slice(0, 3);
+    playerHand = ["4C", "5C", "6C"];
+    // playerHand = deck.slice(0, 3);
     _displayHand(playerHand, "player");
 }
 
@@ -479,7 +480,7 @@ function _highlightTables(handType, bet) {
 
 function _removeHighlights() {
     const allLinesAllTables = ["#sixcbrow1", "#sixcbrow2", "#sixcbrow3", "#sixcbrow4", "#sixcbrow5", "#sixcbrow6", "#sixcbrow7", "#abrow1", "#abrow2", "#abrow3", "#pprow1", "#pprow2", "#pprow3", "#pprow4", "#pprow5"];
-    $(allLinesAllTables).removeClass("highlight");
+    $(allLinesAllTables.join()).removeClass("highlight");
 }
 
 function payout() {
