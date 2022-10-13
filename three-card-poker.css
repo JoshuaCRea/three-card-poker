@@ -539,8 +539,13 @@ body {
     left: 570px;
 }
 
+#six-card-bonus-winnings-display {
+    top: 1147px;
+    left: 460px;
+}
+
 #total-winnings-display {
-    top: 1145px;
+    top: 1175px;
     left: 567px;
 }
 
@@ -564,6 +569,12 @@ body {
 
 #pairPlusBonusWinnings {
     color: #f1c5c5;
+    font-family: "Arvo", serif;
+    font-size: 16pt;
+}
+
+#sixCardBonusWinnings {
+    color: #a3f6e8;
     font-family: "Arvo", serif;
     font-size: 16pt;
 }

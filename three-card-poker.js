@@ -549,6 +549,7 @@ function payout() {
     $("#playWinnings").html(`$${playWinnings}`);
     $("#anteBonusWinnings").html(`$${anteBonusWinnings}`);
     $("#pairPlusBonusWinnings").html(`$${pairPlusWinnings}`);
+    $("#sixCardBonusWinnings").html(`$${sixCardBonusWinnings}`);
     $("#totalWinnings").html(`$${totalWinnings}`);
 }
 
@@ -645,6 +646,7 @@ window.onload = () => {
     $("#playWinnings").html("$0");
     $("#anteBonusWinnings").html("$0");
     $("#pairPlusBonusWinnings").html("$0");
+    $("#sixCardBonusWinnings").html("$0");
     $("#totalWinnings").html("$0");
 }
 
