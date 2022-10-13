@@ -227,7 +227,7 @@ function _isTheHandAFiveCardStraightFlush(hand) {
     return areFlushedCardsAWheelStraight() || areFlushedCardsANonWheelStraight();
 }
 
-function isTheHandAFiveCardFourOfAKind(hand) {
+function _isTheHandAFiveCardFourOfAKind(hand) {
     const handRanks = [];
     hand.forEach(card => {
         handRanks.push(CARD_RANKS[card.charAt(0)]);
@@ -251,7 +251,7 @@ function isTheHandAFiveCardFourOfAKind(hand) {
     return false;
 }
 
-function isTheHandAFiveCardFullHouse(hand) {
+function _isTheHandAFiveCardFullHouse(hand) {
     const handRanks = [];
     hand.forEach(card => {
         handRanks.push(CARD_RANKS[card.charAt(0)]);
@@ -317,7 +317,7 @@ function _isTheHandAFiveCardStraight(hand) {
     return false;
 }
 
-function isTheHandAFiveCardThreeOfAKind(hand) {
+function _isTheHandAFiveCardThreeOfAKind(hand) {
     const handRanks = [];
     hand.forEach(card => {
         handRanks.push(CARD_RANKS[card.charAt(0)]);
@@ -343,6 +343,31 @@ function isTheHandAFiveCardThreeOfAKind(hand) {
         return true;
     }
     return false;
+}
+
+function _determineFiveCardHandType(playerHand, dealerHand) {
+    const hand = [playerHand, dealerHand].flat();
+    if (_isTheHandAFiveCardRoyalFlush(hand)) {
+        return "royalFlush";
+    }
+    if (_isTheHandAFiveCardStraightFlush(hand)) {
+        return "straightFlush";
+    }
+    if (_isTheHandAFiveCardFourOfAKind(hand)) {
+        return "fourOfAKind";
+    }
+    if (_isTheHandAFiveCardFullHouse(hand)) {
+        return "fullHouse";
+    }
+    if (_isTheHandAFiveCardFlush(hand)) {
+        return "flush";
+    }
+    if (_isTheHandAFiveCardStraight(hand)) {
+        return "straight";
+    }
+    if (_isTheHandAFiveCardThreeOfAKind(hand)) {
+        return "threeOfAKind";
+    }
 }
 
 function _isTheHandAPair(hand) {
@@ -670,24 +695,24 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardFlush(["2C", "4C", "7S", "9C", "KC", "TC"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2D", "6D", "7D", "KD", "9D", "TD"]) === true);
 // console.log(_isTheHandAFiveCardFlush(["2H", "6D", "7D", "KD", "9D", "TH"]) === false);
-// console.log(isTheHandAFiveCardThreeOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === true);
-// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
-// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === false);
-// console.log(isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
-// console.log(isTheHandAFiveCardThreeOfAKind(["QH", "5H", "5S", "5D", "QC", "QS"]) === false);
-// console.log(isTheHandAFiveCardThreeOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
-// console.log(isTheHandAFiveCardFullHouse(["3D", "5H", "5S", "5D", "KC", "TC"]) === false);
-// console.log(isTheHandAFiveCardFullHouse(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
-// console.log(isTheHandAFiveCardFullHouse(["TH", "5H", "5S", "5D", "5C", "QS"]) === false);
-// console.log(isTheHandAFiveCardFullHouse(["TH", "5H", "5S", "5D", "QC", "QS"]) === true);
-// console.log(isTheHandAFiveCardFullHouse(["QH", "5H", "5S", "5D", "QC", "QS"]) === true);
-// console.log(isTheHandAFiveCardFullHouse(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
-// console.log(isTheHandAFiveCardFourOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === false);
-// console.log(isTheHandAFiveCardFourOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
-// console.log(isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === true);
-// console.log(isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
-// console.log(isTheHandAFiveCardFourOfAKind(["QH", "5H", "5S", "QD", "QC", "QS"]) === true);
-// console.log(isTheHandAFiveCardFourOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === true);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === false);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["QH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(_isTheHandAFiveCardThreeOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
+// console.log(_isTheHandAFiveCardFullHouse(["3D", "5H", "5S", "5D", "KC", "TC"]) === false);
+// console.log(_isTheHandAFiveCardFullHouse(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
+// console.log(_isTheHandAFiveCardFullHouse(["TH", "5H", "5S", "5D", "5C", "QS"]) === false);
+// console.log(_isTheHandAFiveCardFullHouse(["TH", "5H", "5S", "5D", "QC", "QS"]) === true);
+// console.log(_isTheHandAFiveCardFullHouse(["QH", "5H", "5S", "5D", "QC", "QS"]) === true);
+// console.log(_isTheHandAFiveCardFullHouse(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
+// console.log(_isTheHandAFiveCardFourOfAKind(["3D", "5H", "5S", "5D", "KC", "TC"]) === false);
+// console.log(_isTheHandAFiveCardFourOfAKind(["TH", "6D", "7C", "3H", "AS", "QD"]) === false);
+// console.log(_isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "5C", "QS"]) === true);
+// console.log(_isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
+// console.log(_isTheHandAFiveCardFourOfAKind(["QH", "5H", "5S", "QD", "QC", "QS"]) === true);
+// console.log(_isTheHandAFiveCardFourOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
 // console.log(_isTheHandAFiveCardStraightFlush(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
 // console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "3S", "7C", "6H", "4D"]) === false); // six card straight, no flush
 // console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "2S", "7C", "6H", "4D"]) === false); // 5 card straight, no flush
@@ -701,6 +726,15 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardRoyalFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === false); // wheel straight flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "AD", "TC", "JC"]) === true); // royal flush
+// console.log(_determineFiveCardHandType(["AC", "KC", "QC"], ["7C", "TC", "JC"]) === "royalFlush");
+// console.log(_determineFiveCardHandType(["8C", "5C", "JS"], ["7C", "6C", "4C"]) === "straightFlush");
+// console.log(_determineFiveCardHandType(["QH", "5H", "5S"], ["QD", "QC", "QS"]) === "fourOfAKind");
+// console.log(_determineFiveCardHandType(["TH", "5H", "5S"], ["5D", "QC", "QS"]) === "fullHouse")
+// console.log(_determineFiveCardHandType(["2C", "4C", "7S"], ["9C", "KC", "TC"]) === "flush");
+// console.log(_determineFiveCardHandType(["8C", "5D", "3S"], ["7C", "6H", "4D"]) === "straight");
+// console.log(_determineFiveCardHandType(["3D", "5H", "5S"], ["5D", "KC", "TC"]) === "threeOfAKind");
+// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["5D", "KC", "TC"]) === undefined);
+// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["AD", "KC", "TC"]) === undefined);
 
 
 
