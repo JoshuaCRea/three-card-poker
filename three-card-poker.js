@@ -5,6 +5,7 @@ let dealerHand = [];
 let playerBalance = initialPlayerBalance;
 let totalWagerAmount = 0;
 let isRoundActive = false;
+let hasThePlayerRebet = false;
 let deck = [];
 let tempAnteWager = 0;
 let tempPairPlusWager = 0;
@@ -60,7 +61,12 @@ function placeWager(wagerAmount, wagerType) {
         _hideHands();
         WAGER_COUNTERS.playWager = 0;
         totalWagerAmount = 0;
-        $("#total-wager-display").html(`$${totalWagerAmount}`);
+        $("#anteWinnings").html("$0");
+        $("#playWinnings").html("$0");
+        $("#anteBonusWinnings").html("$0");
+        $("#pairPlusBonusWinnings").html("$0");
+        $("#sixCardBonusWinnings").html("$0");
+        $("#totalWinnings").html("$0");
         const infoBoxMessage = "";
         $("#infoBox").html(infoBoxMessage);
     }
@@ -103,12 +109,17 @@ function rebet() {
     if (isRoundActive) {
         return;
     }
+    if (hasThePlayerRebet === true) {
+        return;
+    }
+    hasThePlayerRebet = true;
     totalWagerAmount = 0;
     WAGER_COUNTERS.playWager = 0;
     WAGER_COUNTERS.anteWager = tempAnteWager;
     WAGER_COUNTERS.pairPlusWager = tempPairPlusWager;
     WAGER_COUNTERS.sixCardBonusWager = tempSixCardBonusWager;
     totalWagerAmount += (WAGER_COUNTERS.anteWager + WAGER_COUNTERS.pairPlusWager + WAGER_COUNTERS.sixCardBonusWager);
+    playerBalance -= totalWagerAmount;
     $("#play-bet-chipstack").css("visibility", "hidden");
     $("#play-chiptally").css("visibility", "hidden");
     _removeHighlights();
@@ -121,6 +132,7 @@ function rebet() {
     $("#playWinnings").html("$0");
     $("#anteBonusWinnings").html("$0");
     $("#pairPlusBonusWinnings").html("$0");
+    $("#sixCardBonusWinnings").html("$0");
     $("#totalWinnings").html("$0");
 }
 
@@ -557,9 +569,10 @@ function playGame() {
     if (!isRoundActive) {
         return;
     }
+    hasThePlayerRebet = false;
     placeWager(WAGER_COUNTERS.anteWager, "PLAY");
     $("#player-balance").html(`$${playerBalance}`);
-    dealerHand = ["7C", "KH", "8C"];
+    dealerHand = ["7C", "TH", "8C"];
     // dealerHand = deck.slice(3, 6);
     _displayHand(dealerHand, "dealer");
     let infoBoxMessage;
@@ -585,7 +598,8 @@ function fold() {
     if (!isRoundActive) {
         return;
     }
-    dealerHand = deck.slice(3, 6);
+    dealerHand = ["7C", "KH", "8C"];
+    // dealerHand = deck.slice(3, 6);
     _displayHand(dealerHand, "dealer");
     $("#anteWager").html(WAGER_COUNTERS.anteWager);
     $("#pairPlusWager").html(WAGER_COUNTERS.pairPlusWager);
@@ -736,15 +750,15 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardRoyalFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === false); // wheel straight flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "AD", "TC", "JC"]) === true); // royal flush
-console.log(_determineFiveCardHandType(["AC", "KC", "QC"], ["7C", "TC", "JC"]) === "royalFlush");
-console.log(_determineFiveCardHandType(["8C", "5C", "JS"], ["7C", "6C", "4C"]) === "straightFlush");
-console.log(_determineFiveCardHandType(["QH", "5H", "5S"], ["QD", "QC", "QS"]) === "fourOfAKind");
-console.log(_determineFiveCardHandType(["TH", "5H", "5S"], ["5D", "QC", "QS"]) === "fullHouse")
-console.log(_determineFiveCardHandType(["2C", "4C", "7S"], ["9C", "KC", "TC"]) === "flush");
-console.log(_determineFiveCardHandType(["8C", "5D", "3S"], ["7C", "6H", "4D"]) === "straight");
-console.log(_determineFiveCardHandType(["3D", "5H", "5S"], ["5D", "KC", "TC"]) === "threeOfAKind");
-console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["5D", "KC", "TC"]) === undefined);
-console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["AD", "KC", "TC"]) === undefined);
+// console.log(_determineFiveCardHandType(["AC", "KC", "QC"], ["7C", "TC", "JC"]) === "royalFlush");
+// console.log(_determineFiveCardHandType(["8C", "5C", "JS"], ["7C", "6C", "4C"]) === "straightFlush");
+// console.log(_determineFiveCardHandType(["QH", "5H", "5S"], ["QD", "QC", "QS"]) === "fourOfAKind");
+// console.log(_determineFiveCardHandType(["TH", "5H", "5S"], ["5D", "QC", "QS"]) === "fullHouse")
+// console.log(_determineFiveCardHandType(["2C", "4C", "7S"], ["9C", "KC", "TC"]) === "flush");
+// console.log(_determineFiveCardHandType(["8C", "5D", "3S"], ["7C", "6H", "4D"]) === "straight");
+// console.log(_determineFiveCardHandType(["3D", "5H", "5S"], ["5D", "KC", "TC"]) === "threeOfAKind");
+// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["5D", "KC", "TC"]) === undefined);
+// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["AD", "KC", "TC"]) === undefined);
 
 
 
