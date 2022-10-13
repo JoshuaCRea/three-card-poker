@@ -158,6 +158,25 @@ function _didPlayerWinHighCardTieBreaker(pHand, dHand) {
     return false;
 }
 
+function _isTheHandAFiveCardRoyalFlush(hand) {
+    if (!_isTheHandAFiveCardStraightFlush(hand)) {
+        return false
+    }
+    const countOfSuits = new Counter(hand.map(card => card.charAt(1)));
+    let flushedSuit = "";
+    Object.keys(countOfSuits).forEach(suit => {
+        if (countOfSuits[suit] >= 5) {
+            flushedSuit = suit;
+        }
+    });
+    const flushedCards = hand.filter(card => card.charAt(1) === flushedSuit);
+    const flushedRanks = flushedCards.map(card => card.charAt(0));
+    const areRanksARoyalStraight = () => {
+        return ["T", "J", "Q", "K", "A"].every(royalRank => flushedRanks.includes(royalRank));
+    }
+    return areRanksARoyalStraight();
+}
+
 function _isTheHandAFiveCardStraightFlush(hand) {
     if (!_isTheHandAFiveCardFlush(hand)) {
         return false
@@ -207,17 +226,6 @@ function _isTheHandAFiveCardStraightFlush(hand) {
     }
     return areFlushedCardsAWheelStraight() || areFlushedCardsANonWheelStraight();
 }
-
-console.log(_isTheHandAFiveCardStraightFlush(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
-console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "3S", "7C", "6H", "4D"]) === false); // six card straight, no flush
-console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "2S", "7C", "6H", "4D"]) === false); // 5 card straight, no flush
-console.log(_isTheHandAFiveCardStraightFlush(["8C", "5C", "JS", "7C", "6C", "4C"]) === true); // 5 card stright flush, sixth card out of sequence and off-suit
-console.log(_isTheHandAFiveCardStraightFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
-console.log(_isTheHandAFiveCardStraightFlush(["8S", "3S", "2S", "7S", "6S", "4S"]) === false); // all cards in sequence, but not the same sequence, flush
-console.log(_isTheHandAFiveCardStraightFlush(["2C", "6H", "7H", "9H", "9H", "TH"]) === false); // flush, no straight
-console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TS"]) === false); // wheel straight, no flush
-console.log(_isTheHandAFiveCardStraightFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === true); // wheel straight flush
-console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TD"]) === false); // wheel straight, flush, but the flush is not the straight cards
 
 function isTheHandAFiveCardFourOfAKind(hand) {
     const handRanks = [];
@@ -680,6 +688,19 @@ window.onload = () => {
 // console.log(isTheHandAFiveCardFourOfAKind(["TH", "5H", "5S", "5D", "QC", "QS"]) === false);
 // console.log(isTheHandAFiveCardFourOfAKind(["QH", "5H", "5S", "QD", "QC", "QS"]) === true);
 // console.log(isTheHandAFiveCardFourOfAKind(["AH", "KS", "3C", "KH", "4D", "AC"]) === false);
+// console.log(_isTheHandAFiveCardStraightFlush(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
+// console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "3S", "7C", "6H", "4D"]) === false); // six card straight, no flush
+// console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "2S", "7C", "6H", "4D"]) === false); // 5 card straight, no flush
+// console.log(_isTheHandAFiveCardStraightFlush(["8C", "5C", "JS", "7C", "6C", "4C"]) === true); // 5 card stright flush, sixth card out of sequence and off-suit
+// console.log(_isTheHandAFiveCardStraightFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
+// console.log(_isTheHandAFiveCardStraightFlush(["8S", "3S", "2S", "7S", "6S", "4S"]) === false); // all cards in sequence, but not the same sequence, flush
+// console.log(_isTheHandAFiveCardStraightFlush(["2C", "6H", "7H", "9H", "9H", "TH"]) === false); // flush, no straight
+// console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TS"]) === false); // wheel straight, no flush
+// console.log(_isTheHandAFiveCardStraightFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === true); // wheel straight flush
+// console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TD"]) === false); // wheel straight, flush, but the flush is not the straight cards
+// console.log(_isTheHandAFiveCardRoyalFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === false); // wheel straight flush
+// console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
+// console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "AD", "TC", "JC"]) === true); // royal flush
 
 
 
