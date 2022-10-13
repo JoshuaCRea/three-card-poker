@@ -170,61 +170,43 @@ function _isTheHandAFiveCardStraightFlush(hand) {
         }
     });
     const flushedCards = hand.filter(card => card.charAt(1) === flushedSuit);
+    const sortedRanks = flushedCards.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
     const areFlushedCardsAWheelStraight = () => {
-        const sortedRanks = flushedCards.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-        if (flushedCards.length === 6) {
-            sortedRanks.splice(4, 1);
-        }
         return ["2", "3", "4", "5", "A"].every((e, i) => sortedRanks[i] === CARD_RANKS[e]);
     }
     const areFlushedCardsANonWheelStraight = () => {
-        const sortedRanks = flushedCards.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-        let theNumberOfFlushedCardsThatAreInSequence = 0;
-        for (let i = 0; i < (sortedRanks.length - 1); i++) {
-            if (sortedRanks[i + 1] - sortedRanks[i] === 1) {
-                theNumberOfFlushedCardsThatAreInSequence += 1;
+        const lowStraight = [];
+        const highStraight = [];
+        for (let i = 0; i < 4; i++) {
+            if (sortedRanks[i] + 1 === sortedRanks[i + 1]) {
+                if (lowStraight.length === 0) {
+                    lowStraight.push(sortedRanks[i]);
+                    lowStraight.push(sortedRanks[i + 1])
+                } else {
+                    lowStraight.push(sortedRanks[i + 1]);
+                }
             }
         }
-        return theNumberOfFlushedCardsThatAreInSequence >= 4;
+        if (lowStraight.length === 5) {
+            return true;
+        }
+        for (let i = 1; i < 5; i++) {
+            if (sortedRanks[i] + 1 === sortedRanks[i + 1]) {
+                if (highStraight.length === 0) {
+                    highStraight.push(sortedRanks[i]);
+                    highStraight.push(sortedRanks[i + 1])
+                } else {
+                    highStraight.push(sortedRanks[i + 1]);
+                }
+            }
+        }
+        if (highStraight.length === 5) {
+            return true;
+        }
+        return false;
     }
     return areFlushedCardsAWheelStraight() || areFlushedCardsANonWheelStraight();
 }
-// const orderedRanks = hand.map(card => CARD_RANKS[card.charAt(0)]).sort((a, b) => a - b);
-// const wheelStraightRanks = [0, 1, 2, 3, 12];
-// if (wheelStraightRanks.every(rank => {
-//     return orderedRanks.includes(rank);
-// })) {
-//     return true;
-// }
-
-//     const lowStraight = [];
-//     const highStraight = [];
-//     for (let i = 0; i < 4; i++) {
-//         if (orderedRanks[i] + 1 === orderedRanks[i + 1]) {
-//             if (lowStraight.length === 0) {
-//                 lowStraight.push(orderedRanks[i]);
-//                 lowStraight.push(orderedRanks[i + 1])
-//             }
-//             lowStraight.push(orderedRanks[i + 1]);
-//         }
-//     }
-//     if (lowStraight.length === 5) {
-//         return true;
-//     }
-//     for (let i = 1; i < 5; i++) {
-//         if (orderedRanks[i] + 1 === orderedRanks[i + 1] === true) {
-//             if (highStraight.length === 0) {
-//                 highStraight.push(orderedRanks[i]);
-//                 highStraight.push(orderedRanks[i + 1])
-//             }
-//             highStraight.push(orderedRanks[i + 1]);
-//         }
-//     }
-//     if (highStraight.length === 4) {
-//         return true;
-//     }
-//     return false;
-// }
 
 console.log(_isTheHandAFiveCardStraightFlush(["2C", "3D", "7S", "8C", "9H", "TD"]) === false);
 console.log(_isTheHandAFiveCardStraightFlush(["8C", "5D", "3S", "7C", "6H", "4D"]) === false); // six card straight, no flush
@@ -235,7 +217,7 @@ console.log(_isTheHandAFiveCardStraightFlush(["8S", "3S", "2S", "7S", "6S", "4S"
 console.log(_isTheHandAFiveCardStraightFlush(["2C", "6H", "7H", "9H", "9H", "TH"]) === false); // flush, no straight
 console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TS"]) === false); // wheel straight, no flush
 console.log(_isTheHandAFiveCardStraightFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === true); // wheel straight flush
-console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TD"]) === false); // straight, flush, but the flush is not the straight cards
+console.log(_isTheHandAFiveCardStraightFlush(["AD", "2D", "3D", "4D", "5H", "TD"]) === false); // wheel straight, flush, but the flush is not the straight cards
 
 function isTheHandAFiveCardFourOfAKind(hand) {
     const handRanks = [];
