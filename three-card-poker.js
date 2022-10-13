@@ -347,28 +347,18 @@ function _isTheHandAFiveCardThreeOfAKind(hand) {
 
 function _determineFiveCardHandType(playerHand, dealerHand) {
     const hand = [playerHand, dealerHand].flat();
-    if (_isTheHandAFiveCardRoyalFlush(hand)) {
-        return "royalFlush";
-    }
-    if (_isTheHandAFiveCardStraightFlush(hand)) {
-        return "straightFlush";
-    }
-    if (_isTheHandAFiveCardFourOfAKind(hand)) {
-        return "fourOfAKind";
-    }
-    if (_isTheHandAFiveCardFullHouse(hand)) {
-        return "fullHouse";
-    }
-    if (_isTheHandAFiveCardFlush(hand)) {
-        return "flush";
-    }
-    if (_isTheHandAFiveCardStraight(hand)) {
-        return "straight";
-    }
-    if (_isTheHandAFiveCardThreeOfAKind(hand)) {
-        return "threeOfAKind";
-    }
-}
+    const FIVE_CARD_HAND_TYPES = {
+        "fiveCardRoyalFlush": _isTheHandAFiveCardRoyalFlush,
+        "fiveCardStraightFlush": _isTheHandAFiveCardStraightFlush,
+        "fiveCardFourOfAKind": _isTheHandAFiveCardFourOfAKind,
+        "fiveCardFullHouse": _isTheHandAFiveCardFullHouse,
+        "fiveCardFlush": _isTheHandAFiveCardFlush,
+        "fiveCardStraight": _isTheHandAFiveCardStraight,
+        "fiveCardThreeOfAKind": _isTheHandAFiveCardThreeOfAKind,
+    };
+    const precedenceOfHands = ["fiveCardRoyalFlush", "fiveCardStraightFlush", "fiveCardFourOfAKind", "fiveCardFullHouse", "fiveCardFlush", "fiveCardStraight", "fiveCardThreeOfAKind"];
+    return precedenceOfHands.find(handType => FIVE_CARD_HAND_TYPES[handType](hand));
+};
 
 function _isTheHandAPair(hand) {
     return new Set(hand.map(card => card.charAt(0))).size === 2;
@@ -500,10 +490,12 @@ function _removeHighlights() {
 
 function payout() {
     const handType = _determineHandType(playerHand);
+    const sixCardHandType = _determineFiveCardHandType(playerHand, dealerHand);
     let anteWinnings = 0;
     let playWinnings = 0;
     let anteBonusWinnings = 0;
     let pairPlusWinnings = 0;
+    let sixCardBonusWinnings = 0;
     let totalWinnings = 0;
     const ANTE_BONUS_MULTIPLIER = {
         "straightFlush": 5,
@@ -517,6 +509,15 @@ function payout() {
         "flush": 4,
         "pair": 1,
     };
+    const SIX_CARD_BONUS_MULTIPLIER = {
+        "fiveCardRoyalFlush": 1000,
+        "fiveCardStraightFlush": 200,
+        "fiveCardFourOfAKind": 50,
+        "fiveCardFullHouse": 25,
+        "fiveCardFlush": 20,
+        "fiveCardStraight": 10,
+        "fiveCardThreeOfAKind": 5,
+    };
     if (handType) {
         if (ANTE_BONUS_MULTIPLIER[handType]) {
             _highlightTables(handType, "ante");
@@ -527,6 +528,12 @@ function payout() {
             pairPlusWinnings = WAGER_COUNTERS.pairPlusWager + WAGER_COUNTERS.pairPlusWager * PAIR_PLUS_BONUS_MULTIPLIER[handType];
         }
     }
+    if (sixCardHandType) {
+        if (WAGER_COUNTERS.sixCardBonusWager > 0) {
+            _highlightTables(sixCardHandType, "sixCB");
+            sixCardBonusWinnings = WAGER_COUNTERS.sixCardBonusWager + WAGER_COUNTERS.sixCardBonusWager * SIX_CARD_BONUS_MULTIPLIER[sixCardHandType];
+        }
+    }
     if (_doesDealerQualify(dealerHand)) {
         if (_didPlayerHaveBetterHand(playerHand, dealerHand)) {
             anteWinnings = WAGER_COUNTERS.anteWager * 2;
@@ -535,7 +542,7 @@ function payout() {
     } else {
         anteWinnings = WAGER_COUNTERS.anteWager;
     }
-    totalWinnings = anteWinnings + playWinnings + pairPlusWinnings + anteBonusWinnings;
+    totalWinnings = anteWinnings + playWinnings + pairPlusWinnings + anteBonusWinnings + sixCardBonusWinnings;
     playerBalance += totalWinnings;
     $("#player-balance-display").html(`$${playerBalance}`);
     $("#anteWinnings").html(`$${anteWinnings}`);
@@ -551,7 +558,8 @@ function playGame() {
     }
     placeWager(WAGER_COUNTERS.anteWager, "PLAY");
     $("#player-balance").html(`$${playerBalance}`);
-    dealerHand = deck.slice(3, 6);
+    dealerHand = ["7C", "KH", "8C"];
+    // dealerHand = deck.slice(3, 6);
     _displayHand(dealerHand, "dealer");
     let infoBoxMessage;
     if (_doesDealerQualify(dealerHand)) {
@@ -726,15 +734,15 @@ window.onload = () => {
 // console.log(_isTheHandAFiveCardRoyalFlush(["AS", "2S", "3S", "4S", "5S", "9D"]) === false); // wheel straight flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "7C", "TC", "JC"]) === true); // royal flush
 // console.log(_isTheHandAFiveCardRoyalFlush(["AC", "KC", "QC", "AD", "TC", "JC"]) === true); // royal flush
-// console.log(_determineFiveCardHandType(["AC", "KC", "QC"], ["7C", "TC", "JC"]) === "royalFlush");
-// console.log(_determineFiveCardHandType(["8C", "5C", "JS"], ["7C", "6C", "4C"]) === "straightFlush");
-// console.log(_determineFiveCardHandType(["QH", "5H", "5S"], ["QD", "QC", "QS"]) === "fourOfAKind");
-// console.log(_determineFiveCardHandType(["TH", "5H", "5S"], ["5D", "QC", "QS"]) === "fullHouse")
-// console.log(_determineFiveCardHandType(["2C", "4C", "7S"], ["9C", "KC", "TC"]) === "flush");
-// console.log(_determineFiveCardHandType(["8C", "5D", "3S"], ["7C", "6H", "4D"]) === "straight");
-// console.log(_determineFiveCardHandType(["3D", "5H", "5S"], ["5D", "KC", "TC"]) === "threeOfAKind");
-// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["5D", "KC", "TC"]) === undefined);
-// console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["AD", "KC", "TC"]) === undefined);
+console.log(_determineFiveCardHandType(["AC", "KC", "QC"], ["7C", "TC", "JC"]) === "royalFlush");
+console.log(_determineFiveCardHandType(["8C", "5C", "JS"], ["7C", "6C", "4C"]) === "straightFlush");
+console.log(_determineFiveCardHandType(["QH", "5H", "5S"], ["QD", "QC", "QS"]) === "fourOfAKind");
+console.log(_determineFiveCardHandType(["TH", "5H", "5S"], ["5D", "QC", "QS"]) === "fullHouse")
+console.log(_determineFiveCardHandType(["2C", "4C", "7S"], ["9C", "KC", "TC"]) === "flush");
+console.log(_determineFiveCardHandType(["8C", "5D", "3S"], ["7C", "6H", "4D"]) === "straight");
+console.log(_determineFiveCardHandType(["3D", "5H", "5S"], ["5D", "KC", "TC"]) === "threeOfAKind");
+console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["5D", "KC", "TC"]) === undefined);
+console.log(_determineFiveCardHandType(["3D", "8H", "5S"], ["AD", "KC", "TC"]) === undefined);
 
 
 
